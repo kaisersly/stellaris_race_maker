@@ -1,0 +1,55 @@
+Elm.Trait = Elm.Trait || {};
+Elm.Trait.make = function (_elm) {
+   "use strict";
+   _elm.Trait = _elm.Trait || {};
+   if (_elm.Trait.values) return _elm.Trait.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect = Elm.Effect.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var isSelected = F2(function (selectedTraits,trait) {    return A2($List.member,trait,selectedTraits);});
+   var isHovered = F2(function (hoveredTrait,trait) {
+      var _p0 = hoveredTrait;
+      if (_p0.ctor === "Nothing") {
+            return false;
+         } else {
+            return _U.eq(trait,_p0._0);
+         }
+   });
+   var pointsLimit = 2;
+   var countPoints = function (traits) {    return $List.sum(A2($List.map,function (_) {    return _.points;},traits));};
+   var remainingPoints = function (traits) {    return pointsLimit - countPoints(traits);};
+   var traitsLimit = 4;
+   var Trait = F5(function (a,b,c,d,e) {    return {family: a,name: b,description: c,points: d,effects: e};});
+   var None = {ctor: "None"};
+   var VeryStrongWeak = {ctor: "VeryStrongWeak"};
+   var RapidSlowBreeders = {ctor: "RapidSlowBreeders"};
+   var QuickSlowLearners = {ctor: "QuickSlowLearners"};
+   var NomadicSedentary = {ctor: "NomadicSedentary"};
+   var NaturalEngineersPhysicistsSociologists = {ctor: "NaturalEngineersPhysicistsSociologists"};
+   var EnduringVenerable = {ctor: "EnduringVenerable"};
+   var CommunalSolitary = {ctor: "CommunalSolitary"};
+   var CharismaticRepugnant = {ctor: "CharismaticRepugnant"};
+   var ExtremelyNonAdaptive = {ctor: "ExtremelyNonAdaptive"};
+   return _elm.Trait.values = {_op: _op
+                              ,remainingPoints: remainingPoints
+                              ,isHovered: isHovered
+                              ,isSelected: isSelected
+                              ,traitsLimit: traitsLimit
+                              ,Trait: Trait
+                              ,ExtremelyNonAdaptive: ExtremelyNonAdaptive
+                              ,CharismaticRepugnant: CharismaticRepugnant
+                              ,CommunalSolitary: CommunalSolitary
+                              ,EnduringVenerable: EnduringVenerable
+                              ,NaturalEngineersPhysicistsSociologists: NaturalEngineersPhysicistsSociologists
+                              ,NomadicSedentary: NomadicSedentary
+                              ,QuickSlowLearners: QuickSlowLearners
+                              ,RapidSlowBreeders: RapidSlowBreeders
+                              ,VeryStrongWeak: VeryStrongWeak
+                              ,None: None};
+};

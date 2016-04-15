@@ -1,0 +1,47 @@
+Elm.Ethos = Elm.Ethos || {};
+Elm.Ethos.SelectedList = Elm.Ethos.SelectedList || {};
+Elm.Ethos.SelectedList.make = function (_elm) {
+   "use strict";
+   _elm.Ethos = _elm.Ethos || {};
+   _elm.Ethos.SelectedList = _elm.Ethos.SelectedList || {};
+   if (_elm.Ethos.SelectedList.values) return _elm.Ethos.SelectedList.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect$List = Elm.Effect.List.make(_elm),
+   $Ethos = Elm.Ethos.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var showOne = F3(function (hoveredEthos,selectedEthoses,ethos) {
+      return A2($Html.div,
+      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2",_0: "ethos",_1: true}
+                                                  ,{ctor: "_Tuple2",_0: "selected",_1: A2($Ethos.isSelected,selectedEthoses,ethos)}
+                                                  ,{ctor: "_Tuple2",_0: "hovered",_1: A2($Ethos.isHovered,hoveredEthos,ethos)}]))]),
+      _U.list([A2($Html.h4,
+              _U.list([]),
+              _U.list([$Html.text(ethos.name)
+                      ,A2($Html.br,_U.list([]),_U.list([]))
+                      ,A2($Html.small,_U.list([]),_U.list([$Html.text($Ethos.dichotomyToString(ethos.dichotomy))]))]))
+              ,A2($Html.p,_U.list([]),_U.list([$Html.text(ethos.description)]))
+              ,A2($Html.h5,_U.list([]),_U.list([$Html.text("Effects :")]))
+              ,$Effect$List.show(ethos.effects)]));
+   });
+   var show = F2(function (hoveredEthos,selectedEthoses) {
+      var ethoses = function () {
+         var _p0 = hoveredEthos;
+         if (_p0.ctor === "Nothing") {
+               return selectedEthoses;
+            } else {
+               var _p1 = _p0._0;
+               return A2($List.append,_U.list([_p1]),A2($List.filter,function (x) {    return !_U.eq(x,_p1);},selectedEthoses));
+            }
+      }();
+      return A2($Html.div,_U.list([$Html$Attributes.$class("selected-ethoses")]),A2($List.map,A2(showOne,hoveredEthos,selectedEthoses),ethoses));
+   });
+   return _elm.Ethos.SelectedList.values = {_op: _op,show: show};
+};

@@ -1,0 +1,43 @@
+Elm.Effect = Elm.Effect || {};
+Elm.Effect.Summary = Elm.Effect.Summary || {};
+Elm.Effect.Summary.make = function (_elm) {
+   "use strict";
+   _elm.Effect = _elm.Effect || {};
+   _elm.Effect.Summary = _elm.Effect.Summary || {};
+   if (_elm.Effect.Summary.values) return _elm.Effect.Summary.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Dict = Elm.Dict.make(_elm),
+   $Effect = Elm.Effect.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Model = Elm.Model.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var addEffectToDict = F2(function (effect,dict) {
+      var effectInDict = A2($Dict.get,effect.name,dict);
+      var _p0 = effectInDict;
+      if (_p0.ctor === "Nothing") {
+            return A3($Dict.insert,effect.name,effect,dict);
+         } else {
+            return A3($Dict.insert,effect.name,_U.update(effect,{amount: effect.amount + _p0._0.amount}),dict);
+         }
+   });
+   var buildEffectDict = function (effects) {    return A3($List.foldl,addEffectToDict,$Dict.empty,effects);};
+   var summarize = function (effects) {    return A2($List.map,$Basics.snd,$Dict.toList(buildEffectDict(effects)));};
+   var extractEffects = function (model) {
+      var effectsFromGovernment = function () {
+         var _p1 = model.selectedGovernment;
+         if (_p1.ctor === "Nothing") {
+               return _U.list([]);
+            } else {
+               return _p1._0.effects;
+            }
+      }();
+      var effectsFromEthoses = A2($List.concatMap,function (_) {    return _.effects;},model.selectedEthoses);
+      return $List.concat(_U.list([effectsFromEthoses,effectsFromGovernment]));
+   };
+   return _elm.Effect.Summary.values = {_op: _op,extractEffects: extractEffects,summarize: summarize};
+};

@@ -1,0 +1,49 @@
+.green { color: green }
+.red { color: red }
+
+.all-ethoses, .all-governments {
+  height: 430px;
+  position: relative;
+}
+
+.all-ethoses ul, .all-governments ul {
+  list-style-type: none;
+}
+
+.all-ethoses .ethos {
+  position: absolute;
+  width: 5em
+}
+
+.all-ethoses .ethos.selected, .all-traits .trait.selected {
+  font-weight: bold;
+}
+.all-governments .government.selected {
+  color: blue;
+  font-weight: bold;
+}
+.all-governments .government {
+  color: green;
+}
+.all-governments .government.unavailable {
+  color: red;
+}
+
+
+.selected-ethoses, .selected-governments {
+  font-size: 0.95em;
+  height: 430px;
+  overflow: scroll;
+  padding-top: 40px;
+}
+
+.selected-ethoses .selected, .selected-governments .selected {
+  opacity: 1;
+}
+.selected-ethoses .hovered, .selected-governments .hovered {
+  opacity: 0.6;
+  font-style: italic;
+}
+.selected-ethoses .selected.hovered, .selected-governments .selected.hovered {
+  opacity: 1;
+}

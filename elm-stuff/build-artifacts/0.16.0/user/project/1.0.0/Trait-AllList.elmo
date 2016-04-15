@@ -1,0 +1,39 @@
+Elm.Trait = Elm.Trait || {};
+Elm.Trait.AllList = Elm.Trait.AllList || {};
+Elm.Trait.AllList.make = function (_elm) {
+   "use strict";
+   _elm.Trait = _elm.Trait || {};
+   _elm.Trait.AllList = _elm.Trait.AllList || {};
+   if (_elm.Trait.AllList.values) return _elm.Trait.AllList.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Trait = Elm.Trait.make(_elm),
+   $Trait$Data = Elm.Trait.Data.make(_elm),
+   $Update = Elm.Update.make(_elm);
+   var _op = {};
+   var showOne = F4(function (address,hoveredTrait,selectedTraits,trait) {
+      var isSelected = A2($Trait.isSelected,selectedTraits,trait);
+      var onClickAction = isSelected ? $Update.DeselectTrait(trait) : $Update.SelectTrait(trait);
+      return A2($Html.li,
+      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2",_0: "trait",_1: true},{ctor: "_Tuple2",_0: "selected",_1: isSelected}]))
+              ,A2($Html$Events.onClick,address,onClickAction)]),
+      _U.list([$Html.text(trait.name)]));
+   });
+   var show = F3(function (address,hoveredTrait,selectedTraits) {
+      var remainingPoints = $Trait.remainingPoints(selectedTraits);
+      var title = A2($Basics._op["++"],"Traits (",A2($Basics._op["++"],$Basics.toString(remainingPoints)," points left)"));
+      return A2($Html.div,
+      _U.list([$Html$Attributes.$class("all-traits")]),
+      _U.list([A2($Html.h2,_U.list([]),_U.list([$Html.text(title)]))
+              ,A2($Html.ul,_U.list([]),A2($List.map,A3(showOne,address,hoveredTrait,selectedTraits),$Trait$Data.all))]));
+   });
+   return _elm.Trait.AllList.values = {_op: _op,showOne: showOne,show: show};
+};

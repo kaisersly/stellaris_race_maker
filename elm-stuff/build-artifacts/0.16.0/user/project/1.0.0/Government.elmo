@@ -1,0 +1,43 @@
+Elm.Government = Elm.Government || {};
+Elm.Government.make = function (_elm) {
+   "use strict";
+   _elm.Government = _elm.Government || {};
+   if (_elm.Government.values) return _elm.Government.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect = Elm.Effect.make(_elm),
+   $Ethos = Elm.Ethos.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var isSelected = F2(function (selectedGovernment,government) {
+      var _p0 = selectedGovernment;
+      if (_p0.ctor === "Nothing") {
+            return false;
+         } else {
+            return _U.eq(government,_p0._0);
+         }
+   });
+   var isHovered = F2(function (hoveredGovernment,government) {
+      var _p1 = hoveredGovernment;
+      if (_p1.ctor === "Nothing") {
+            return false;
+         } else {
+            return _U.eq(government,_p1._0);
+         }
+   });
+   var isAvailable = F2(function (selectedEthoses,government) {
+      var isLockedByEthoses = A2($List.any,function (e) {    return A2($List.member,e.name,government.lockedIf);},selectedEthoses);
+      var isUnlockedByEthoses = $List.isEmpty(government.unlockedIf) ? true : A2($List.any,
+      function (e) {
+         return A2($List.member,e.name,government.unlockedIf);
+      },
+      selectedEthoses);
+      return isUnlockedByEthoses && $Basics.not(isLockedByEthoses);
+   });
+   var Government = F6(function (a,b,c,d,e,f) {    return {name: a,description: b,rulerTitle: c,unlockedIf: d,lockedIf: e,effects: f};});
+   return _elm.Government.values = {_op: _op,isAvailable: isAvailable,isHovered: isHovered,isSelected: isSelected,Government: Government};
+};

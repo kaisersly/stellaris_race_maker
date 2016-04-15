@@ -1,0 +1,22 @@
+Elm.Effect = Elm.Effect || {};
+Elm.Effect.List = Elm.Effect.List || {};
+Elm.Effect.List.make = function (_elm) {
+   "use strict";
+   _elm.Effect = _elm.Effect || {};
+   _elm.Effect.List = _elm.Effect.List || {};
+   if (_elm.Effect.List.values) return _elm.Effect.List.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect = Elm.Effect.make(_elm),
+   $Effect$View = Elm.Effect.View.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var showOne = function (effect) {    return A2($Html.li,_U.list([]),_U.list([$Effect$View.show(effect)]));};
+   var show = function (effects) {    return A2($Html.ul,_U.list([]),A2($List.map,showOne,effects));};
+   return _elm.Effect.List.values = {_op: _op,show: show};
+};

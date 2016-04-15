@@ -1,0 +1,16 @@
+Elm.Effect = Elm.Effect || {};
+Elm.Effect.make = function (_elm) {
+   "use strict";
+   _elm.Effect = _elm.Effect || {};
+   if (_elm.Effect.values) return _elm.Effect.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var Effect = F4(function (a,b,c,d) {    return {name: a,amount: b,suffix: c,moreIsBetter: d};});
+   return _elm.Effect.values = {_op: _op,Effect: Effect};
+};

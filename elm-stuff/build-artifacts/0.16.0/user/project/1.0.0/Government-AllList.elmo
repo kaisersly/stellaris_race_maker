@@ -1,0 +1,43 @@
+Elm.Government = Elm.Government || {};
+Elm.Government.AllList = Elm.Government.AllList || {};
+Elm.Government.AllList.make = function (_elm) {
+   "use strict";
+   _elm.Government = _elm.Government || {};
+   _elm.Government.AllList = _elm.Government.AllList || {};
+   if (_elm.Government.AllList.values) return _elm.Government.AllList.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Ethos = Elm.Ethos.make(_elm),
+   $Government = Elm.Government.make(_elm),
+   $Government$Data = Elm.Government.Data.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Update = Elm.Update.make(_elm);
+   var _op = {};
+   var showOne = F4(function (address,selectedEthoses,selectedGovernment,government) {
+      var isAvailable = A2($Government.isAvailable,selectedEthoses,government);
+      var isSelected = A2($Government.isSelected,selectedGovernment,government);
+      var onClickAction = isSelected ? $Update.DeselectGovernment : $Basics.not(isAvailable) ? $Update.NoOp : $Update.SelectGovernment(government);
+      return A2($Html.li,
+      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2",_0: "government",_1: true}
+                                                  ,{ctor: "_Tuple2",_0: "unavailable",_1: $Basics.not(isAvailable)}
+                                                  ,{ctor: "_Tuple2",_0: "selected",_1: isSelected}]))
+              ,A2($Html$Events.onMouseEnter,address,$Update.HoverGovernment(government))
+              ,A2($Html$Events.onMouseLeave,address,$Update.DehoverGovernment)
+              ,A2($Html$Events.onClick,address,onClickAction)]),
+      _U.list([$Html.text(government.name)]));
+   });
+   var show = F3(function (address,selectedEthoses,selectedGovernment) {
+      return A2($Html.div,
+      _U.list([$Html$Attributes.$class("all-governments")]),
+      _U.list([A2($Html.h2,_U.list([]),_U.list([$Html.text("Government")]))
+              ,A2($Html.ul,_U.list([]),A2($List.map,A3(showOne,address,selectedEthoses,selectedGovernment),$Government$Data.all))]));
+   });
+   return _elm.Government.AllList.values = {_op: _op,show: show};
+};

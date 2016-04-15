@@ -1,0 +1,108 @@
+Elm.Effect = Elm.Effect || {};
+Elm.Effect.Factory = Elm.Effect.Factory || {};
+Elm.Effect.Factory.make = function (_elm) {
+   "use strict";
+   _elm.Effect = _elm.Effect || {};
+   _elm.Effect.Factory = _elm.Effect.Factory || {};
+   if (_elm.Effect.Factory.values) return _elm.Effect.Factory.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect = Elm.Effect.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var xenophobia = function (amount) {    return {name: "Xenophobia",amount: amount,suffix: "%",moreIsBetter: false};};
+   var warTolerance = function (amount) {    return {name: "War tolerance",amount: amount,suffix: "%",moreIsBetter: true};};
+   var warHappiness = function (amount) {    return {name: "War happiness",amount: amount,suffix: "%",moreIsBetter: true};};
+   var surveySpeed = function (amount) {    return {name: "Survey speed",amount: amount,suffix: "%",moreIsBetter: true};};
+   var societyOutput = function (amount) {    return {name: "Society output",amount: amount,suffix: "%",moreIsBetter: true};};
+   var slaveryTolerance = function (amount) {    return {name: "Slavery tolerance",amount: amount,suffix: "%",moreIsBetter: true};};
+   var slaveMineralOutput = function (amount) {    return {name: "Slavery mineral output",amount: amount,suffix: "%",moreIsBetter: true};};
+   var slaveFoodOutput = function (amount) {    return {name: "Slavery food output",amount: amount,suffix: "%",moreIsBetter: true};};
+   var shipUpkeep = function (amount) {    return {name: "Ship upkeep",amount: amount,suffix: "%",moreIsBetter: false};};
+   var shipUpgradeCost = function (amount) {    return {name: "Ship upgrade cost",amount: amount,suffix: "%",moreIsBetter: false};};
+   var shipCost = function (amount) {    return {name: "Ship cost",amount: amount,suffix: "%",moreIsBetter: false};};
+   var rivalryInfluenceGain = function (amount) {    return {name: "Rivalry influence gain",amount: amount,suffix: "%",moreIsBetter: true};};
+   var resourceOutputWithoutSlaves = function (amount) {    return {name: "Resource output without slaves",amount: amount,suffix: "%",moreIsBetter: true};};
+   var researchSpeed = function (amount) {    return {name: "Research speed",amount: amount,suffix: "%",moreIsBetter: true};};
+   var researchAlternative = function (amount) {    return {name: "Research alternative",amount: amount,suffix: "",moreIsBetter: true};};
+   var planetaryEdictDuration = function (amount) {    return {name: "Planetary edict duration",amount: amount,suffix: "%",moreIsBetter: true};};
+   var physicsOutput = function (amount) {    return {name: "Physics output",amount: amount,suffix: "%",moreIsBetter: true};};
+   var otherSpeciesHappinessPerPop = function (amount) {    return {name: "Other species happiness per POP",amount: amount,suffix: "%",moreIsBetter: true};};
+   var minerals = function (amount) {    return {name: "Minerals",amount: amount,suffix: "%",moreIsBetter: true};};
+   var militiaHealth = function (amount) {    return {name: "Militia health",amount: amount,suffix: "%",moreIsBetter: true};};
+   var migrationTime = function (amount) {    return {name: "Migration time",amount: amount,suffix: "%",moreIsBetter: false};};
+   var leaderSkillLevels = function (amount) {    return {name: "Leader skill levels",amount: amount,suffix: "",moreIsBetter: true};};
+   var leaderRecruitmentCost = function (amount) {    return {name: "Leader recruitment cost",amount: amount,suffix: "%",moreIsBetter: false};};
+   var leaderLifespan = function (amount) {    return {name: "Leader lifespan",amount: amount,suffix: "",moreIsBetter: true};};
+   var leaderExperienceGain = function (amount) {    return {name: "Leader experience gain",amount: amount,suffix: "%",moreIsBetter: true};};
+   var leaderCapacity = function (amount) {    return {name: "Leader capacity",amount: amount,suffix: "",moreIsBetter: true};};
+   var happiness = function (amount) {    return {name: "Happiness",amount: amount,suffix: "%",moreIsBetter: true};};
+   var habitability = function (amount) {    return {name: "Habitability",amount: amount,suffix: "%",moreIsBetter: true};};
+   var growthTime = function (amount) {    return {name: "Growth time",amount: amount,suffix: "%",moreIsBetter: false};};
+   var foodRequirement = function (amount) {    return {name: "Food requirement",amount: amount,suffix: "%",moreIsBetter: false};};
+   var foodOutput = function (amount) {    return {name: "Food output",amount: amount,suffix: "",moreIsBetter: true};};
+   var food = function (amount) {    return {name: "Food",amount: amount,suffix: "%",moreIsBetter: true};};
+   var fleetSizeLimit = function (amount) {    return {name: "Fleet size limit",amount: amount,suffix: "",moreIsBetter: true};};
+   var ethicsDivergence = function (amount) {    return {name: "Ethics divergence",amount: amount,suffix: "%",moreIsBetter: false};};
+   var engineeringOutput = function (amount) {    return {name: "Engineering output",amount: amount,suffix: "%",moreIsBetter: false};};
+   var energyCredits = function (amount) {    return {name: "Energy credits",amount: amount,suffix: "%",moreIsBetter: true};};
+   var edictCost = function (amount) {    return {name: "Edict cost",amount: amount,suffix: "%",moreIsBetter: false};};
+   var coreSectorPlanets = function (amount) {    return {name: "Core sector planets",amount: amount,suffix: "",moreIsBetter: true};};
+   var buildingCost = function (amount) {    return {name: "Building cost",amount: amount,suffix: "%",moreIsBetter: false};};
+   var bombardmentResistance = function (amount) {    return {name: "Bombardment resistance",amount: amount,suffix: "%",moreIsBetter: true};};
+   var armyUpkeep = function (amount) {    return {name: "Army upkeep",amount: amount,suffix: "%",moreIsBetter: false};};
+   var armyDamage = function (amount) {    return {name: "Army damage",amount: amount,suffix: "%",moreIsBetter: true};};
+   var allianceCost = function (amount) {    return {name: "Alliance cost",amount: amount,suffix: "%",moreIsBetter: false};};
+   var alienSlaveryTolerance = function (amount) {    return {name: "Alien slavery tolerance",amount: amount,suffix: "%",moreIsBetter: true};};
+   var simpleEffect = function (name) {    return {name: name,amount: 0,suffix: "",moreIsBetter: false};};
+   return _elm.Effect.Factory.values = {_op: _op
+                                       ,simpleEffect: simpleEffect
+                                       ,alienSlaveryTolerance: alienSlaveryTolerance
+                                       ,allianceCost: allianceCost
+                                       ,armyDamage: armyDamage
+                                       ,armyUpkeep: armyUpkeep
+                                       ,bombardmentResistance: bombardmentResistance
+                                       ,buildingCost: buildingCost
+                                       ,coreSectorPlanets: coreSectorPlanets
+                                       ,edictCost: edictCost
+                                       ,energyCredits: energyCredits
+                                       ,engineeringOutput: engineeringOutput
+                                       ,ethicsDivergence: ethicsDivergence
+                                       ,fleetSizeLimit: fleetSizeLimit
+                                       ,food: food
+                                       ,foodOutput: foodOutput
+                                       ,foodRequirement: foodRequirement
+                                       ,growthTime: growthTime
+                                       ,habitability: habitability
+                                       ,happiness: happiness
+                                       ,leaderCapacity: leaderCapacity
+                                       ,leaderExperienceGain: leaderExperienceGain
+                                       ,leaderLifespan: leaderLifespan
+                                       ,leaderRecruitmentCost: leaderRecruitmentCost
+                                       ,leaderSkillLevels: leaderSkillLevels
+                                       ,migrationTime: migrationTime
+                                       ,militiaHealth: militiaHealth
+                                       ,minerals: minerals
+                                       ,otherSpeciesHappinessPerPop: otherSpeciesHappinessPerPop
+                                       ,physicsOutput: physicsOutput
+                                       ,planetaryEdictDuration: planetaryEdictDuration
+                                       ,researchAlternative: researchAlternative
+                                       ,researchSpeed: researchSpeed
+                                       ,resourceOutputWithoutSlaves: resourceOutputWithoutSlaves
+                                       ,rivalryInfluenceGain: rivalryInfluenceGain
+                                       ,shipCost: shipCost
+                                       ,shipUpgradeCost: shipUpgradeCost
+                                       ,shipUpkeep: shipUpkeep
+                                       ,slaveFoodOutput: slaveFoodOutput
+                                       ,slaveMineralOutput: slaveMineralOutput
+                                       ,slaveryTolerance: slaveryTolerance
+                                       ,societyOutput: societyOutput
+                                       ,surveySpeed: surveySpeed
+                                       ,warHappiness: warHappiness
+                                       ,warTolerance: warTolerance
+                                       ,xenophobia: xenophobia};
+};

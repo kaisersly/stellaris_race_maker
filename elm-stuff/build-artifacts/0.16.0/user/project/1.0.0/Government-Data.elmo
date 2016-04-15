@@ -1,0 +1,127 @@
+Elm.Government = Elm.Government || {};
+Elm.Government.Data = Elm.Government.Data || {};
+Elm.Government.Data.make = function (_elm) {
+   "use strict";
+   _elm.Government = _elm.Government || {};
+   _elm.Government.Data = _elm.Government.Data || {};
+   if (_elm.Government.Data.values) return _elm.Government.Data.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect$Factory = Elm.Effect.Factory.make(_elm),
+   $Government = Elm.Government.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var all = _U.list([{name: "Military Dictatorship"
+                      ,description: "This government is a militaristic form of autocracy, with the ruler serving as the undisputed head of the military which is firmly in control of the state apparatus."
+                      ,rulerTitle: "Grand Marshal"
+                      ,unlockedIf: _U.list(["Militarist","Fanatic Militarist"])
+                      ,lockedIf: _U.list(["Individualist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.fleetSizeLimit(10)
+                                        ,$Effect$Factory.shipUpkeep(-10)
+                                        ,$Effect$Factory.simpleEffect("Can build an oversized ship")
+                                        ,$Effect$Factory.simpleEffect("Admirals/generals are eligible for rulership")])}
+                     ,{name: "Divine Mandate"
+                      ,description: "This government is a spiritualistic form of autocracy, where the ruler is treated as a divine symbol. Organized religion is widely employed in support of the state apparatus."
+                      ,rulerTitle: "Archprophet"
+                      ,unlockedIf: _U.list(["Spiritualist","Fanatic Spiritualist"])
+                      ,lockedIf: _U.list(["Individualist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.slaveryTolerance(50)
+                                        ,$Effect$Factory.warTolerance(50)
+                                        ,$Effect$Factory.simpleEffect("Can build a mausoleum, which grants -10% ethics divergence on the planet on which it is built")])}
+                     ,{name: "Despotic Hegemony"
+                      ,description: "This government is a materialistic form of autocracy, where citizens are viewed as little more than cogs in the state machinery. Efficiency and technological progress are valued above all things."
+                      ,rulerTitle: "Overseer"
+                      ,unlockedIf: _U.list(["Materialist","Fanatic Materialist"])
+                      ,lockedIf: _U.list(["Individualist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.researchSpeed(5)
+                                        ,$Effect$Factory.surveySpeed(10)
+                                        ,$Effect$Factory.simpleEffect("Can build an elite assault army")])}
+                     ,{name: "Enlightened Monarchy"
+                      ,description: ""
+                      ,rulerTitle: ""
+                      ,unlockedIf: _U.list(["Pacifist","Fanatic Pacifist"])
+                      ,lockedIf: _U.list(["Individualist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.edictCost(-25)
+                                        ,$Effect$Factory.planetaryEdictDuration(25)
+                                        ,$Effect$Factory.coreSectorPlanets(1)
+                                        ,$Effect$Factory.simpleEffect("Can build a special park building")])}
+                     ,{name: "Despotic Empire"
+                      ,description: "This government is a relatively pure form of autocracy, with an absolute ruler that governs the state with an iron gripping appendage."
+                      ,rulerTitle: "Emperor"
+                      ,unlockedIf: _U.list([])
+                      ,lockedIf: _U.list(["Individualist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.buildingCost(-15)
+                                        ,$Effect$Factory.slaveMineralOutput(10)
+                                        ,$Effect$Factory.slaveFoodOutput(10)
+                                        ,$Effect$Factory.simpleEffect("Can build an oversized military station")])}
+                     ,{name: "Military Junta"
+                      ,description: "This government is a militaristic form of oligarchy, where power rests with a council of high-ranking military officers who oversee all matters of state."
+                      ,rulerTitle: "Archon"
+                      ,unlockedIf: _U.list(["Militarist","Fanatic Militarist"])
+                      ,lockedIf: _U.list(["Fanatic Collectivist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.shipCost(-10)
+                                        ,$Effect$Factory.shipUpgradeCost(-25)
+                                        ,$Effect$Factory.simpleEffect("Admirals/generals are eligible for rulership")])}
+                     ,{name: "Theocratic Oligarchy"
+                      ,description: ""
+                      ,rulerTitle: "Inquisitor"
+                      ,unlockedIf: _U.list(["Spiritualist","Fanatic Spiritualist"])
+                      ,lockedIf: _U.list(["Fanatic Collectivist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.ethicsDivergence(-10)])}
+                     ,{name: "Science Directorate"
+                      ,description: "This government is a materialist form of oligarchy, where a committee of scientists supervises the government apparatus for maximum efficiency."
+                      ,rulerTitle: "Director"
+                      ,unlockedIf: _U.list(["Materialist","Fanatic Materialist"])
+                      ,lockedIf: _U.list(["Fanatic Collectivist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.researchAlternative(1),$Effect$Factory.simpleEffect("Scientists are eligible for Leadership")])}
+                     ,{name: "Peaceful Bureaucracy"
+                      ,description: "This government is a pacifist form of oligarchy, where a complicated system of bureaucracy governs all aspects of society to ensure the safety of the citizenry."
+                      ,rulerTitle: "Coordinator"
+                      ,unlockedIf: _U.list(["Pacifist","Fanatic Pacifist"])
+                      ,lockedIf: _U.list(["Fanatic Collectivist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.leaderCapacity(4),$Effect$Factory.leaderRecruitmentCost(-15)])}
+                     ,{name: "Plutocratic Oligarchy"
+                      ,description: "This is a plutocratic form of oligarchy, ruled by a wealthy elite. A citizen\'s personal wealth translates directly into political power."
+                      ,rulerTitle: "Executive"
+                      ,unlockedIf: _U.list([])
+                      ,lockedIf: _U.list(["Fanatic Collectivist","Fanatic Individualist"])
+                      ,effects: _U.list([$Effect$Factory.energyCredits(5),$Effect$Factory.minerals(5)])}
+                     ,{name: "Military Republic"
+                      ,description: ""
+                      ,rulerTitle: "Consul"
+                      ,unlockedIf: _U.list(["Militarist","Fanatic Militarist"])
+                      ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
+                      ,effects: _U.list([$Effect$Factory.armyUpkeep(-15)
+                                        ,$Effect$Factory.shipUpkeep(-15)
+                                        ,$Effect$Factory.warTolerance(25)
+                                        ,$Effect$Factory.simpleEffect("Admirals/generals are eligible for rulership")])}
+                     ,{name: "Theocratic Republic"
+                      ,description: ""
+                      ,rulerTitle: ""
+                      ,unlockedIf: _U.list(["Spiritualist","Fanatic Spiritualist"])
+                      ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
+                      ,effects: _U.list([$Effect$Factory.ethicsDivergence(-10)])}
+                     ,{name: "Direct Democracy"
+                      ,description: "This government is a materialistic form of democracy, where citizens use computer networks to vote directly on most matters regarding the state."
+                      ,rulerTitle: "Chancellor"
+                      ,unlockedIf: _U.list(["Materialist","Fanatic Materialist"])
+                      ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
+                      ,effects: _U.list([$Effect$Factory.coreSectorPlanets(4)])}
+                     ,{name: "Moral Bureaucracy"
+                      ,description: "This government is a pacifistic form of democracy, firmly guided by moralist principles and non-violence."
+                      ,rulerTitle: ""
+                      ,unlockedIf: _U.list(["Pacifist","Fanatic Pacifist"])
+                      ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
+                      ,effects: _U.list([$Effect$Factory.happiness(10)])}
+                     ,{name: "Indirect Democracy"
+                      ,description: "This government is an indirect democracy, where citizens vote on officials who are elected to represent them."
+                      ,rulerTitle: "President"
+                      ,unlockedIf: _U.list([])
+                      ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
+                      ,effects: _U.list([$Effect$Factory.leaderSkillLevels(1),$Effect$Factory.leaderRecruitmentCost(-10)])}]);
+   return _elm.Government.Data.values = {_op: _op,all: all};
+};

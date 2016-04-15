@@ -1,0 +1,113 @@
+Elm.Ethos = Elm.Ethos || {};
+Elm.Ethos.Data = Elm.Ethos.Data || {};
+Elm.Ethos.Data.make = function (_elm) {
+   "use strict";
+   _elm.Ethos = _elm.Ethos || {};
+   _elm.Ethos.Data = _elm.Ethos.Data || {};
+   if (_elm.Ethos.Data.values) return _elm.Ethos.Data.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect$Factory = Elm.Effect.Factory.make(_elm),
+   $Ethos = Elm.Ethos.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var all = _U.list([{dichotomy: $Ethos.CollectivistIndividualist
+                      ,name: "Fanatic Collectivist"
+                      ,points: 2
+                      ,description: "The purpose of the individual is simple: strengthen the collective. To enter the blackness of space we move as one, and we shall not be weakened by wanton separatism."
+                      ,effects: _U.list([$Effect$Factory.slaveryTolerance(100),$Effect$Factory.foodRequirement(-10)])}
+                     ,{dichotomy: $Ethos.CollectivistIndividualist
+                      ,name: "Collectivist"
+                      ,points: 1
+                      ,description: "Society has long since evolved past the insignificant rivalries and concerns of the individuals. We are numerous but one, and the needs of the many outweigh the needs of the few. We stand truly equal."
+                      ,effects: _U.list([$Effect$Factory.slaveryTolerance(50),$Effect$Factory.foodRequirement(-5)])}
+                     ,{dichotomy: $Ethos.CollectivistIndividualist
+                      ,name: "Individualist"
+                      ,points: 1
+                      ,description: "Community is a means to an end, not the end itself. Only by empowering the individual to reach their maximum potential do we achieve true freedom. Freedom of thought, of speech, of movement, of trade."
+                      ,effects: _U.list([$Effect$Factory.energyCredits(10),$Effect$Factory.slaveryTolerance(-50),$Effect$Factory.ethicsDivergence(5)])}
+                     ,{dichotomy: $Ethos.CollectivistIndividualist
+                      ,name: "Fanatic Individualist"
+                      ,points: 2
+                      ,description: "Through history, too often has the hulking mass of the collective stifled the radiant genius of individuals. No more. Forge your own path, and let new fruits be illuminated by the sparks of clashing ambitions."
+                      ,effects: _U.list([$Effect$Factory.energyCredits(20),$Effect$Factory.slaveryTolerance(-100),$Effect$Factory.ethicsDivergence(10)])}
+                     ,{dichotomy: $Ethos.XenophobeXenophile
+                      ,name: "Fanatic Xenophobe"
+                      ,points: 2
+                      ,description: "We must guard ourselves against the alien elements that would disrupt our society, the influences that would debase our genetic and cultural heritage. The Other is to be held at arm\'s length, and that arm is to hold a sword."
+                      ,effects: _U.list([$Effect$Factory.alienSlaveryTolerance(100),$Effect$Factory.xenophobia(20)])}
+                     ,{dichotomy: $Ethos.XenophobeXenophile
+                      ,name: "Xenophobe"
+                      ,points: 1
+                      ,description: "A homogeneous society is a predictable society. A predictable society is a safe society. There is little to be gained by giving excessive attention or care for those who do not belong."
+                      ,effects: _U.list([$Effect$Factory.alienSlaveryTolerance(50),$Effect$Factory.xenophobia(10)])}
+                     ,{dichotomy: $Ethos.XenophobeXenophile
+                      ,name: "Xenophile"
+                      ,points: 1
+                      ,description: "There exist, in all of us, a deep-seated fascination of the unknown. An adventurous spirit that rejects the familiar and glories in the unfamiliar, whatever - or whoever - it may be."
+                      ,effects: _U.list([$Effect$Factory.xenophobia(-10)])}
+                     ,{dichotomy: $Ethos.XenophobeXenophile
+                      ,name: "Fanatic Xenophile"
+                      ,points: 2
+                      ,description: "If there was such a thing as an absolute moral imperative, it would be to explore the cosmos and embrace all within it. We were never meant to journey alone."
+                      ,effects: _U.list([$Effect$Factory.xenophobia(-20)])}
+                     ,{dichotomy: $Ethos.MilitaristPacifist
+                      ,name: "Fanatic Militarist"
+                      ,points: 2
+                      ,description: "The ability to project force is at paramount importance. The only way to preserve our way of life is to make everyone share it, willingly or not."
+                      ,effects: _U.list([$Effect$Factory.rivalryInfluenceGain(50)
+                                        ,$Effect$Factory.allianceCost(75)
+                                        ,$Effect$Factory.warTolerance(75)
+                                        ,$Effect$Factory.warHappiness(10)
+                                        ,$Effect$Factory.armyDamage(20)])}
+                     ,{dichotomy: $Ethos.MilitaristPacifist
+                      ,name: "Militarist"
+                      ,points: 1
+                      ,description: "The only true values are courage and discipline, and channeled properly they can overcome any obstacle. Therein lies true strength; force withheld, a promise made."
+                      ,effects: _U.list([$Effect$Factory.rivalryInfluenceGain(25)
+                                        ,$Effect$Factory.allianceCost(50)
+                                        ,$Effect$Factory.warTolerance(50)
+                                        ,$Effect$Factory.warHappiness(5)
+                                        ,$Effect$Factory.armyDamage(10)])}
+                     ,{dichotomy: $Ethos.MilitaristPacifist
+                      ,name: "Pacifist"
+                      ,points: 1
+                      ,description: "Conflict as a mean to an end is a ridiculous concept. It is by nature destructive, destroying what was to be obtained or giving room to grow that which was to be destroyed."
+                      ,effects: _U.list([$Effect$Factory.food(10)
+                                        ,$Effect$Factory.warTolerance(-25)
+                                        ,$Effect$Factory.warHappiness(-10)
+                                        ,$Effect$Factory.armyDamage(-10)])}
+                     ,{dichotomy: $Ethos.MilitaristPacifist
+                      ,name: "Fanatic Pacifist"
+                      ,points: 2
+                      ,description: ""
+                      ,effects: _U.list([$Effect$Factory.food(20)
+                                        ,$Effect$Factory.warTolerance(-50)
+                                        ,$Effect$Factory.warHappiness(-20)
+                                        ,$Effect$Factory.armyDamage(-20)])}
+                     ,{dichotomy: $Ethos.MaterialistSpiritualist
+                      ,name: "Fanatic Materialist"
+                      ,points: 2
+                      ,description: "Although it hurts, we must grow up and put aside our outdated notions of morality. There is no \'divine spark\' granting special value to a living mind. No object has any intrinsic value apart from what we choose to grant it. Let us embrace the freedom of certitude, and achieve maximum efficiency in all things."
+                      ,effects: _U.list([$Effect$Factory.physicsOutput(10),$Effect$Factory.societyOutput(10),$Effect$Factory.engineeringOutput(10)])}
+                     ,{dichotomy: $Ethos.MaterialistSpiritualist
+                      ,name: "Materialist"
+                      ,points: 1
+                      ,description: "As we reach for the stars, we must put away childish things: gods, spirits and other phantasms of the brain. Reality is cruel and unforgiving, yet we must protect ourselves and secure the survival of our race through the unflinching pursuit of science and technology."
+                      ,effects: _U.list([$Effect$Factory.physicsOutput(5),$Effect$Factory.societyOutput(5),$Effect$Factory.engineeringOutput(5)])}
+                     ,{dichotomy: $Ethos.MaterialistSpiritualist
+                      ,name: "Spiritualist"
+                      ,points: 1
+                      ,description: "It behooves us to remember how tiny we are, how pointless our lives are in this vast uncaring universe... what nonsense! The only truth we can ever know is that of our own existence. The universe - in all its apparent glory - is but a dream we all happen to share."
+                      ,effects: _U.list([$Effect$Factory.happiness(5)])}
+                     ,{dichotomy: $Ethos.MaterialistSpiritualist
+                      ,name: "Fanatic Spiritualist"
+                      ,points: 2
+                      ,description: "Our science has proved that consciousness begets reality. We regard with patience the childlike efforts of those who delude themselves as they play with their blocks of \'hard matter\'."
+                      ,effects: _U.list([$Effect$Factory.happiness(10)])}]);
+   return _elm.Ethos.Data.values = {_op: _op,all: all};
+};

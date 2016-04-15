@@ -1,0 +1,50 @@
+Elm.Ethos = Elm.Ethos || {};
+Elm.Ethos.make = function (_elm) {
+   "use strict";
+   _elm.Ethos = _elm.Ethos || {};
+   if (_elm.Ethos.values) return _elm.Ethos.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect = Elm.Effect.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var isSelected = F2(function (selectedEthoses,ethos) {    return A2($List.member,ethos,selectedEthoses);});
+   var isHovered = F2(function (hoveredEthos,ethos) {
+      var _p0 = hoveredEthos;
+      if (_p0.ctor === "Nothing") {
+            return false;
+         } else {
+            return _U.eq(ethos,_p0._0);
+         }
+   });
+   var pointsLimit = 3;
+   var countPoints = function (ethoses) {    return $List.sum(A2($List.map,function (_) {    return _.points;},ethoses));};
+   var remainingPoints = function (ethoses) {    return pointsLimit - countPoints(ethoses);};
+   var Ethos = F5(function (a,b,c,d,e) {    return {dichotomy: a,name: b,points: c,description: d,effects: e};});
+   var dichotomyToString = function (dichotomy) {
+      var _p1 = dichotomy;
+      switch (_p1.ctor)
+      {case "CollectivistIndividualist": return "Collectivist - Individualist";
+         case "XenophobeXenophile": return "Xenophobe - Xenophile";
+         case "MilitaristPacifist": return "Militarist - Pacifist";
+         default: return "Materialist - Spiritualist";}
+   };
+   var MaterialistSpiritualist = {ctor: "MaterialistSpiritualist"};
+   var MilitaristPacifist = {ctor: "MilitaristPacifist"};
+   var XenophobeXenophile = {ctor: "XenophobeXenophile"};
+   var CollectivistIndividualist = {ctor: "CollectivistIndividualist"};
+   return _elm.Ethos.values = {_op: _op
+                              ,isHovered: isHovered
+                              ,isSelected: isSelected
+                              ,remainingPoints: remainingPoints
+                              ,dichotomyToString: dichotomyToString
+                              ,Ethos: Ethos
+                              ,CollectivistIndividualist: CollectivistIndividualist
+                              ,XenophobeXenophile: XenophobeXenophile
+                              ,MilitaristPacifist: MilitaristPacifist
+                              ,MaterialistSpiritualist: MaterialistSpiritualist};
+};

@@ -1,0 +1,79 @@
+.fanatic-militarist {
+  top: 40px;
+  left: 160px;
+}
+
+.militarist {
+  top: 120px;
+  left: 160px;
+}
+
+.pacifist {
+  top: 310px;
+  left: 160px;
+}
+
+.fanatic-pacifist {
+  top: 390px;
+  left: 160px;
+}
+
+.fanatic-collectivist {
+  top: 215px;
+  left: 0px;
+}
+
+.collectivist {
+  top: 215px;
+  left: 90px;
+}
+
+.individualist {
+  top: 215px;
+  left: 230px;
+}
+
+.fanatic-individualist {
+  top: 215px;
+  left: 320px;
+}
+
+.fanatic-xenophobe {
+  top: 95px;
+  left: 280px;
+}
+
+.xenophobe {
+  top: 165px;
+  left: 210px;
+}
+
+.xenophile {
+  top: 265px;
+  left: 110px;
+}
+
+.fanatic-xenophile {
+  top: 320px;
+  left: 40px;
+}
+
+.fanatic-materialist {
+  top: 95px;
+  left: 40px;
+}
+
+.materialist {
+  top: 165px;
+  left: 110px;
+}
+
+.spiritualist {
+  top: 265px;
+  left: 210px;
+}
+
+.fanatic-spiritualist {
+  top: 320px;
+  left: 280px;
+}

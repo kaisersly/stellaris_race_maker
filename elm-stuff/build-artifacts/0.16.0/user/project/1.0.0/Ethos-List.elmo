@@ -1,0 +1,39 @@
+Elm.Ethos = Elm.Ethos || {};
+Elm.Ethos.List = Elm.Ethos.List || {};
+Elm.Ethos.List.make = function (_elm) {
+   "use strict";
+   _elm.Ethos = _elm.Ethos || {};
+   _elm.Ethos.List = _elm.Ethos.List || {};
+   if (_elm.Ethos.List.values) return _elm.Ethos.List.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Ethos = Elm.Ethos.make(_elm),
+   $Ethos$Data = Elm.Ethos.Data.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Update = Elm.Update.make(_elm);
+   var _op = {};
+   var onClickAction = F2(function (isSelected,ethos) {    return isSelected ? $Update.DeselectEthos(ethos) : $Update.SelectEthos(ethos);});
+   var buildViewModel = F2(function (selectedEthos,ethos) {    return {name: ethos.name,isSelected: A2($List.member,ethos,selectedEthos)};});
+   var showOne = F3(function (address,selectedEthos,ethos) {
+      var model = A2(buildViewModel,selectedEthos,ethos);
+      return A2($Html.li,
+      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2",_0: "ethos",_1: true},{ctor: "_Tuple2",_0: "selected",_1: model.isSelected}]))
+              ,A2($Html$Events.onClick,address,A2(onClickAction,model.isSelected,ethos))]),
+      _U.list([$Html.text(model.name)]));
+   });
+   var show = F2(function (address,selectedEthos) {
+      return A2($Html.div,
+      _U.list([$Html$Attributes.$class("ethos-list")]),
+      _U.list([A2($Html.h3,_U.list([]),_U.list([$Html.text("Ethos")]))
+              ,A2($Html.ul,_U.list([]),A2($List.map,A2(showOne,address,selectedEthos),$Ethos$Data.all))]));
+   });
+   var ViewModel = F2(function (a,b) {    return {name: a,isSelected: b};});
+   return _elm.Ethos.List.values = {_op: _op,show: show};
+};
