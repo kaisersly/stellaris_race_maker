@@ -15,35 +15,30 @@
   width: 5em
 }
 
-.all-ethoses .ethos.selected, .all-traits .trait.selected {
-  font-weight: bold;
-}
-.all-governments .government.selected {
+.selected {
   color: blue;
   font-weight: bold;
 }
 .all-governments .government {
-  color: green;
+  /*color: red;*/
+  /*color: green;*/
 }
 .all-governments .government.unavailable {
-  color: red;
+  color: lightgrey;
 }
 
 
-.selected-ethoses, .selected-governments {
+.selected-ethoses, .selected-governments, .selected-traits {
   font-size: 0.95em;
   height: 430px;
   overflow: scroll;
   padding-top: 40px;
 }
 
-.selected-ethoses .selected, .selected-governments .selected {
-  opacity: 1;
-}
-.selected-ethoses .hovered, .selected-governments .hovered {
-  opacity: 0.6;
+.hovered {
   font-style: italic;
-}
-.selected-ethoses .selected.hovered, .selected-governments .selected.hovered {
   opacity: 1;
+}
+.notselected.hovered {
+  opacity: 0.5;
 }

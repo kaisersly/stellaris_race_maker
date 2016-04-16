@@ -15,6 +15,8 @@ Elm.Main.make = function (_elm) {
    $Update = Elm.Update.make(_elm),
    $View = Elm.View.make(_elm);
    var _op = {};
-   var main = $StartApp$Simple.start({model: $Model.initialModel,update: $Update.update,view: $View.show});
+   var main = $StartApp$Simple.start({model: $Model.initialModel
+                                     ,update: $Update.update
+                                     ,view: $View.show});
    return _elm.Main.values = {_op: _op,main: main};
 };

@@ -16,17 +16,31 @@ Elm.Effect.View.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var isGood = F2(function (amount,moreIsBetter) {    return _U.cmp(amount,0) > 0 && moreIsBetter || _U.cmp(amount,0) < 0 && $Basics.not(moreIsBetter);});
+   var isGood = F2(function (amount,moreIsBetter) {
+      return _U.cmp(amount,0) > 0 && moreIsBetter || _U.cmp(amount,
+      0) < 0 && $Basics.not(moreIsBetter);
+   });
    var amountSpan = function (_p0) {
       var _p1 = _p0;
       var _p3 = _p1.moreIsBetter;
       var _p2 = _p1.amount;
       var sign = _U.cmp(_p2,0) > 0 ? "+" : "-";
       return _U.eq(_p2,0) ? $Html.text("") : A2($Html.span,
-      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2",_0: "green",_1: A2(isGood,_p2,_p3)}
-                                                  ,{ctor: "_Tuple2",_0: "red",_1: $Basics.not(A2(isGood,_p2,_p3))}]))]),
-      _U.list([$Html.text(sign),$Html.text($Basics.toString($Basics.abs(_p2))),$Html.text(_p1.suffix),$Html.text(" ")]));
+      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2"
+                                                   ,_0: "green"
+                                                   ,_1: A2(isGood,_p2,_p3)}
+                                                  ,{ctor: "_Tuple2"
+                                                   ,_0: "red"
+                                                   ,_1: $Basics.not(A2(isGood,_p2,_p3))}]))]),
+      _U.list([$Html.text(sign)
+              ,$Html.text($Basics.toString($Basics.abs(_p2)))
+              ,$Html.text(_p1.suffix)
+              ,$Html.text(" ")]));
    };
-   var show = function (effect) {    return A2($Html.span,_U.list([]),_U.list([amountSpan(effect),$Html.text(effect.name)]));};
+   var show = function (effect) {
+      return A2($Html.span,
+      _U.list([]),
+      _U.list([amountSpan(effect),$Html.text(effect.name)]));
+   };
    return _elm.Effect.View.values = {_op: _op,show: show};
 };

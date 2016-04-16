@@ -30,7 +30,11 @@ Elm.Government.make = function (_elm) {
          }
    });
    var isAvailable = F2(function (selectedEthoses,government) {
-      var isLockedByEthoses = A2($List.any,function (e) {    return A2($List.member,e.name,government.lockedIf);},selectedEthoses);
+      var isLockedByEthoses = A2($List.any,
+      function (e) {
+         return A2($List.member,e.name,government.lockedIf);
+      },
+      selectedEthoses);
       var isUnlockedByEthoses = $List.isEmpty(government.unlockedIf) ? true : A2($List.any,
       function (e) {
          return A2($List.member,e.name,government.unlockedIf);
@@ -38,6 +42,17 @@ Elm.Government.make = function (_elm) {
       selectedEthoses);
       return isUnlockedByEthoses && $Basics.not(isLockedByEthoses);
    });
-   var Government = F6(function (a,b,c,d,e,f) {    return {name: a,description: b,rulerTitle: c,unlockedIf: d,lockedIf: e,effects: f};});
-   return _elm.Government.values = {_op: _op,isAvailable: isAvailable,isHovered: isHovered,isSelected: isSelected,Government: Government};
+   var Government = F6(function (a,b,c,d,e,f) {
+      return {name: a
+             ,description: b
+             ,rulerTitle: c
+             ,unlockedIf: d
+             ,lockedIf: e
+             ,effects: f};
+   });
+   return _elm.Government.values = {_op: _op
+                                   ,isAvailable: isAvailable
+                                   ,isHovered: isHovered
+                                   ,isSelected: isSelected
+                                   ,Government: Government};
 };

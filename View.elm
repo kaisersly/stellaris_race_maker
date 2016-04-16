@@ -14,6 +14,7 @@ import Ethos.SelectedList
 import Government.AllList
 import Government.SelectedList
 import Trait.AllList
+import Trait.SelectedList
 
 
 show : Signal.Address Action -> Model -> Html
@@ -46,9 +47,9 @@ show address model =
           [ div
               [ class "col-sm-5" ]
               [ Trait.AllList.show address model.hoveredTrait model.selectedTraits ]
-          -- , div
-              -- [ class "col-sm-7" ]
-              -- [ Trait.SelectedList.show model.hoveredTrait model.selectedTrait ]
+          , div
+              [ class "col-sm-7" ]
+              [ Trait.SelectedList.show model.hoveredTrait model.selectedTraits ]
           ]
       , div
           [ class "row" ]

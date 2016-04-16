@@ -16,56 +16,111 @@ Elm.Update.make = function (_elm) {
    $Trait = Elm.Trait.make(_elm);
    var _op = {};
    var DehoverTrait = {ctor: "DehoverTrait"};
-   var HoverTrait = function (a) {    return {ctor: "HoverTrait",_0: a};};
-   var DeselectTrait = function (a) {    return {ctor: "DeselectTrait",_0: a};};
-   var SelectTrait = function (a) {    return {ctor: "SelectTrait",_0: a};};
+   var HoverTrait = function (a) {
+      return {ctor: "HoverTrait",_0: a};
+   };
+   var DeselectTrait = function (a) {
+      return {ctor: "DeselectTrait",_0: a};
+   };
+   var SelectTrait = function (a) {
+      return {ctor: "SelectTrait",_0: a};
+   };
    var DehoverGovernment = {ctor: "DehoverGovernment"};
-   var HoverGovernment = function (a) {    return {ctor: "HoverGovernment",_0: a};};
+   var HoverGovernment = function (a) {
+      return {ctor: "HoverGovernment",_0: a};
+   };
    var DeselectGovernment = {ctor: "DeselectGovernment"};
-   var SelectGovernment = function (a) {    return {ctor: "SelectGovernment",_0: a};};
+   var SelectGovernment = function (a) {
+      return {ctor: "SelectGovernment",_0: a};
+   };
    var DehoverEthos = {ctor: "DehoverEthos"};
-   var HoverEthos = function (a) {    return {ctor: "HoverEthos",_0: a};};
-   var DeselectEthos = function (a) {    return {ctor: "DeselectEthos",_0: a};};
-   var SelectEthos = function (a) {    return {ctor: "SelectEthos",_0: a};};
+   var HoverEthos = function (a) {
+      return {ctor: "HoverEthos",_0: a};
+   };
+   var DeselectEthos = function (a) {
+      return {ctor: "DeselectEthos",_0: a};
+   };
+   var SelectEthos = function (a) {
+      return {ctor: "SelectEthos",_0: a};
+   };
    var NoOp = {ctor: "NoOp"};
-   var traitsAreValid = function (traits) {    return _U.cmp($Trait.remainingPoints(traits),0) > -1 && _U.cmp($List.length(traits),$Trait.traitsLimit) < 1;};
+   var traitsAreValid = function (traits) {
+      return _U.cmp($Trait.remainingPoints(traits),
+      0) > -1 && _U.cmp($Trait.remainingTraits(traits),0) > -1;
+   };
    var enforceGovernmentIsValid = function (model) {
       var _p0 = model.selectedGovernment;
       if (_p0.ctor === "Nothing") {
             return model;
          } else {
-            return A2($Government.isAvailable,model.selectedEthoses,_p0._0) ? model : _U.update(model,{selectedGovernment: $Maybe.Nothing});
+            return A2($Government.isAvailable,
+            model.selectedEthoses,
+            _p0._0) ? model : _U.update(model,
+            {selectedGovernment: $Maybe.Nothing});
          }
    };
-   var ethosesAreValid = function (ethoses) {    return _U.cmp($Ethos.remainingPoints(ethoses),0) > -1;};
+   var ethosesAreValid = function (ethoses) {
+      return _U.cmp($Ethos.remainingPoints(ethoses),0) > -1;
+   };
    var update = F2(function (action,model) {
       var _p1 = action;
       switch (_p1.ctor)
       {case "NoOp": return model;
          case "SelectEthos": var _p2 = _p1._0;
-           var newEthoses = A2($List.append,_U.list([_p2]),A2($List.filter,function (x) {    return !_U.eq(x.dichotomy,_p2.dichotomy);},model.selectedEthoses));
-           var newModel = ethosesAreValid(newEthoses) ? _U.update(model,{selectedEthoses: newEthoses}) : model;
+           var newEthoses = A2($List.append,
+           _U.list([_p2]),
+           A2($List.filter,
+           function (x) {
+              return !_U.eq(x.dichotomy,_p2.dichotomy);
+           },
+           model.selectedEthoses));
+           var newModel = ethosesAreValid(newEthoses) ? _U.update(model,
+           {selectedEthoses: newEthoses}) : model;
            return enforceGovernmentIsValid(newModel);
-         case "DeselectEthos": var newEthoses = A2($List.filter,function (x) {    return !_U.eq(x,_p1._0);},model.selectedEthoses);
+         case "DeselectEthos": var newEthoses = A2($List.filter,
+           function (x) {
+              return !_U.eq(x,_p1._0);
+           },
+           model.selectedEthoses);
            var newModel = _U.update(model,{selectedEthoses: newEthoses});
            return enforceGovernmentIsValid(newModel);
-         case "HoverEthos": return _U.update(model,{hoveredEthos: $Maybe.Just(_p1._0)});
-         case "DehoverEthos": return _U.update(model,{hoveredEthos: $Maybe.Nothing});
-         case "SelectGovernment": var newModel = _U.update(model,{selectedGovernment: $Maybe.Just(_p1._0)});
+         case "HoverEthos": return _U.update(model,
+           {hoveredEthos: $Maybe.Just(_p1._0)});
+         case "DehoverEthos": return _U.update(model,
+           {hoveredEthos: $Maybe.Nothing});
+         case "SelectGovernment": var newModel = _U.update(model,
+           {selectedGovernment: $Maybe.Just(_p1._0)});
            return enforceGovernmentIsValid(newModel);
-         case "DeselectGovernment": return _U.update(model,{selectedGovernment: $Maybe.Nothing});
-         case "HoverGovernment": return _U.update(model,{hoveredGovernment: $Maybe.Just(_p1._0)});
-         case "DehoverGovernment": return _U.update(model,{hoveredGovernment: $Maybe.Nothing});
+         case "DeselectGovernment": return _U.update(model,
+           {selectedGovernment: $Maybe.Nothing});
+         case "HoverGovernment": return _U.update(model,
+           {hoveredGovernment: $Maybe.Just(_p1._0)});
+         case "DehoverGovernment": return _U.update(model,
+           {hoveredGovernment: $Maybe.Nothing});
          case "SelectTrait": var _p3 = _p1._0;
-           var newTraits = _U.eq(_p3.family,$Trait.None) ? A2($Basics._op["++"],_U.list([_p3]),model.selectedTraits) : A3($Basics.flip,
+           var newTraits = _U.eq(_p3.family,
+           $Trait.None) ? A2($Basics._op["++"],
+           _U.list([_p3]),
+           model.selectedTraits) : A3($Basics.flip,
            F2(function (x,y) {    return A2($Basics._op["++"],x,y);}),
            _U.list([_p3]),
-           A2($List.filter,function (x) {    return !_U.eq(x.family,_p3.family);},model.selectedTraits));
-           return traitsAreValid(newTraits) ? _U.update(model,{selectedTraits: newTraits}) : model;
-         case "DeselectTrait": var newTraits = A2($List.filter,function (x) {    return !_U.eq(x,_p1._0);},model.selectedTraits);
+           A2($List.filter,
+           function (x) {
+              return !_U.eq(x.family,_p3.family);
+           },
+           model.selectedTraits));
+           return traitsAreValid(newTraits) ? _U.update(model,
+           {selectedTraits: newTraits}) : model;
+         case "DeselectTrait": var newTraits = A2($List.filter,
+           function (x) {
+              return !_U.eq(x,_p1._0);
+           },
+           model.selectedTraits);
            return _U.update(model,{selectedTraits: newTraits});
-         case "HoverTrait": return _U.update(model,{hoveredTrait: $Maybe.Just(_p1._0)});
-         default: return _U.update(model,{hoveredTrait: $Maybe.Nothing});}
+         case "HoverTrait": return _U.update(model,
+           {hoveredTrait: $Maybe.Just(_p1._0)});
+         default: return _U.update(model,
+           {hoveredTrait: $Maybe.Nothing});}
    });
    return _elm.Update.values = {_op: _op
                                ,update: update

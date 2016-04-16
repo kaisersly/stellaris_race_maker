@@ -21,7 +21,14 @@ Elm.Model.make = function (_elm) {
                       ,selectedTraits: _U.list([])
                       ,hoveredTrait: $Maybe.Nothing};
    var Model = F6(function (a,b,c,d,e,f) {
-      return {selectedEthoses: a,hoveredEthos: b,selectedGovernment: c,hoveredGovernment: d,selectedTraits: e,hoveredTrait: f};
+      return {selectedEthoses: a
+             ,hoveredEthos: b
+             ,selectedGovernment: c
+             ,hoveredGovernment: d
+             ,selectedTraits: e
+             ,hoveredTrait: f};
    });
-   return _elm.Model.values = {_op: _op,initialModel: initialModel,Model: Model};
+   return _elm.Model.values = {_op: _op
+                              ,initialModel: initialModel
+                              ,Model: Model};
 };

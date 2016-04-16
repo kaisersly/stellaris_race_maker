@@ -59,7 +59,9 @@ Elm.Trait.Data.make = function (_elm) {
                       ,name: "Intelligent"
                       ,description: "This species is highly intelligent and enjoys faster technological progress."
                       ,points: 2
-                      ,effects: _U.list([$Effect$Factory.engineeringOutput(10),$Effect$Factory.physicsOutput(10),$Effect$Factory.societyOutput(10)])}
+                      ,effects: _U.list([$Effect$Factory.engineeringOutput(10)
+                                        ,$Effect$Factory.physicsOutput(10)
+                                        ,$Effect$Factory.societyOutput(10)])}
                      ,{family: $Trait.NaturalEngineersPhysicistsSociologists
                       ,name: "Natural Engineers"
                       ,description: "Members of this species have a natural inclination towards engineering and the material sciences."
@@ -94,12 +96,14 @@ Elm.Trait.Data.make = function (_elm) {
                       ,name: "Resilient"
                       ,description: "Members of this species are physiologically resilient and will fight like enraged brood mothers to defend their worlds."
                       ,points: 1
-                      ,effects: _U.list([$Effect$Factory.militiaHealth(100),$Effect$Factory.bombardmentResistance(200)])}
+                      ,effects: _U.list([$Effect$Factory.militiaHealth(100)
+                                        ,$Effect$Factory.bombardmentResistance(200)])}
                      ,{family: $Trait.VeryStrongWeak
                       ,name: "Strong"
                       ,description: "Members of this species possess great physical strength, making them formidable fighters on the ground."
                       ,points: 1
-                      ,effects: _U.list([$Effect$Factory.armyDamage(20),$Effect$Factory.minerals(5)])}
+                      ,effects: _U.list([$Effect$Factory.armyDamage(20)
+                                        ,$Effect$Factory.minerals(5)])}
                      ,{family: $Trait.None
                       ,name: "Talented"
                       ,description: "Members of this species are born with a natural aptitude."
@@ -119,7 +123,8 @@ Elm.Trait.Data.make = function (_elm) {
                       ,name: "Very Strong"
                       ,description: "Members of this species possess a strength that almost defies the laws of physics."
                       ,points: 4
-                      ,effects: _U.list([$Effect$Factory.armyDamage(40),$Effect$Factory.minerals(10)])}
+                      ,effects: _U.list([$Effect$Factory.armyDamage(40)
+                                        ,$Effect$Factory.minerals(10)])}
                      ,{family: $Trait.None
                       ,name: "Decadent"
                       ,description: "This species requires slaves or servants to feel content."

@@ -1,4 +1,4 @@
-module Trait (Trait, Family(..), remainingPoints, isHovered, isSelected, traitsLimit) where
+module Trait (Trait, Family(..), remainingPoints, isHovered, isSelected, remainingTraits, ofSameFamily) where
 
 
 import Effect exposing (Effect)
@@ -31,6 +31,11 @@ traitsLimit : Int
 traitsLimit = 4
 
 
+remainingTraits : List Trait -> Int
+remainingTraits traits =
+  traitsLimit - (List.length traits)
+
+
 countPoints : List Trait -> Int
 countPoints traits =
   List.map .points traits
@@ -57,3 +62,11 @@ isHovered hoveredTrait trait =
 isSelected : List Trait -> Trait -> Bool
 isSelected selectedTraits trait =
   List.member trait selectedTraits
+
+
+ofSameFamily : List Trait -> Trait -> List String
+ofSameFamily traits trait =
+  List.filter (\x -> x.family == trait.family) traits
+    |> List.filter (\x -> x.family /= None)
+    |> List.filter (\x -> x /= trait)
+    |> List.map .name

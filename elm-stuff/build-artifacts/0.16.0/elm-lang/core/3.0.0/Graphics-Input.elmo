@@ -4,7 +4,8 @@ Elm.Graphics.Input.make = function (_elm) {
    "use strict";
    _elm.Graphics = _elm.Graphics || {};
    _elm.Graphics.Input = _elm.Graphics.Input || {};
-   if (_elm.Graphics.Input.values) return _elm.Graphics.Input.values;
+   if (_elm.Graphics.Input.values)
+   return _elm.Graphics.Input.values;
    var _U = Elm.Native.Utils.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm),
    $Native$Graphics$Input = Elm.Native.Graphics.Input.make(_elm),

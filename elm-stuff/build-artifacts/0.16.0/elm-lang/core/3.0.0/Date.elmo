@@ -3,7 +3,10 @@ Elm.Date.make = function (_elm) {
    "use strict";
    _elm.Date = _elm.Date || {};
    if (_elm.Date.values) return _elm.Date.values;
-   var _U = Elm.Native.Utils.make(_elm),$Native$Date = Elm.Native.Date.make(_elm),$Result = Elm.Result.make(_elm),$Time = Elm.Time.make(_elm);
+   var _U = Elm.Native.Utils.make(_elm),
+   $Native$Date = Elm.Native.Date.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Time = Elm.Time.make(_elm);
    var _op = {};
    var millisecond = $Native$Date.millisecond;
    var second = $Native$Date.second;

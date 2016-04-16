@@ -17,7 +17,12 @@ Elm.Trampoline.make = function (_elm) {
             }
       }
    };
-   var Continue = function (a) {    return {ctor: "Continue",_0: a};};
+   var Continue = function (a) {
+      return {ctor: "Continue",_0: a};
+   };
    var Done = function (a) {    return {ctor: "Done",_0: a};};
-   return _elm.Trampoline.values = {_op: _op,trampoline: trampoline,Done: Done,Continue: Continue};
+   return _elm.Trampoline.values = {_op: _op
+                                   ,trampoline: trampoline
+                                   ,Done: Done
+                                   ,Continue: Continue};
 };

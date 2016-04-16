@@ -19,10 +19,13 @@ extractEffects model =
           []
         Just g ->
           g.effects
+    effectsFromTraits =
+      List.concatMap .effects model.selectedTraits
   in
     List.concat
       [ effectsFromEthoses
       , effectsFromGovernment
+      , effectsFromTraits
       ]
 
 

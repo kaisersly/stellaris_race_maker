@@ -26,7 +26,7 @@ enforceGovernmentIsValid model =
 
 traitsAreValid : List Trait -> Bool
 traitsAreValid traits =
-  (Trait.remainingPoints traits >= 0) && (List.length traits <= Trait.traitsLimit)
+  (Trait.remainingPoints traits >= 0) && (Trait.remainingTraits traits >= 0)
 
 
 type Action

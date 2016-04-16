@@ -21,10 +21,26 @@ Elm.Text.make = function (_elm) {
    var append = $Native$Text.append;
    var fromString = $Native$Text.fromString;
    var empty = fromString("");
-   var concat = function (texts) {    return A3($List.foldr,append,empty,texts);};
-   var join = F2(function (seperator,texts) {    return concat(A2($List.intersperse,seperator,texts));});
-   var defaultStyle = {typeface: _U.list([]),height: $Maybe.Nothing,color: $Color.black,bold: false,italic: false,line: $Maybe.Nothing};
-   var Style = F6(function (a,b,c,d,e,f) {    return {typeface: a,height: b,color: c,bold: d,italic: e,line: f};});
+   var concat = function (texts) {
+      return A3($List.foldr,append,empty,texts);
+   };
+   var join = F2(function (seperator,texts) {
+      return concat(A2($List.intersperse,seperator,texts));
+   });
+   var defaultStyle = {typeface: _U.list([])
+                      ,height: $Maybe.Nothing
+                      ,color: $Color.black
+                      ,bold: false
+                      ,italic: false
+                      ,line: $Maybe.Nothing};
+   var Style = F6(function (a,b,c,d,e,f) {
+      return {typeface: a
+             ,height: b
+             ,color: c
+             ,bold: d
+             ,italic: e
+             ,line: f};
+   });
    var Through = {ctor: "Through"};
    var Over = {ctor: "Over"};
    var Under = {ctor: "Under"};

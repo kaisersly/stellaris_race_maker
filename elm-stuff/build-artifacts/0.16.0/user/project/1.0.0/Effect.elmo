@@ -11,6 +11,8 @@ Elm.Effect.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var Effect = F4(function (a,b,c,d) {    return {name: a,amount: b,suffix: c,moreIsBetter: d};});
+   var Effect = F4(function (a,b,c,d) {
+      return {name: a,amount: b,suffix: c,moreIsBetter: d};
+   });
    return _elm.Effect.values = {_op: _op,Effect: Effect};
 };

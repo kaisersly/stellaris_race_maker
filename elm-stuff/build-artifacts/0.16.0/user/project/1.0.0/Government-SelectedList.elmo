@@ -4,7 +4,8 @@ Elm.Government.SelectedList.make = function (_elm) {
    "use strict";
    _elm.Government = _elm.Government || {};
    _elm.Government.SelectedList = _elm.Government.SelectedList || {};
-   if (_elm.Government.SelectedList.values) return _elm.Government.SelectedList.values;
+   if (_elm.Government.SelectedList.values)
+   return _elm.Government.SelectedList.values;
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
@@ -21,19 +22,41 @@ Elm.Government.SelectedList.make = function (_elm) {
       return $List.isEmpty(list) ? $Html.text("") : A2($Html.div,
       _U.list([]),
       _U.list([A2($Html.h5,_U.list([]),_U.list([$Html.text(title)]))
-              ,A2($Html.ul,_U.list([]),A2($List.map,function (name) {    return A2($Html.li,_U.list([]),_U.list([$Html.text(name)]));},list))]));
+              ,A2($Html.ul,
+              _U.list([]),
+              A2($List.map,
+              function (name) {
+                 return A2($Html.li,_U.list([]),_U.list([$Html.text(name)]));
+              },
+              list))]));
    });
-   var showOne = F3(function (hoveredGovernment,selectedGovernment,government) {
+   var showOne = F3(function (hoveredGovernment,
+   selectedGovernment,
+   government) {
       return A2($Html.div,
-      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2",_0: "government",_1: true}
-                                                  ,{ctor: "_Tuple2",_0: "selected",_1: A2($Government.isSelected,selectedGovernment,government)}
-                                                  ,{ctor: "_Tuple2",_0: "hovered",_1: A2($Government.isHovered,hoveredGovernment,government)}]))]),
+      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2"
+                                                   ,_0: "government"
+                                                   ,_1: true}
+                                                  ,{ctor: "_Tuple2"
+                                                   ,_0: "notselected"
+                                                   ,_1: $Basics.not(A2($Government.isSelected,
+                                                   selectedGovernment,
+                                                   government))}
+                                                  ,{ctor: "_Tuple2"
+                                                   ,_0: "hovered"
+                                                   ,_1: A2($Government.isHovered,
+                                                   hoveredGovernment,
+                                                   government)}]))]),
       _U.list([A2($Html.h4,
               _U.list([]),
               _U.list([$Html.text(government.name)
                       ,A2($Html.br,_U.list([]),_U.list([]))
-                      ,A2($Html.small,_U.list([]),_U.list([$Html.text(government.rulerTitle)]))]))
-              ,A2($Html.p,_U.list([]),_U.list([$Html.text(government.description)]))
+                      ,A2($Html.small,
+                      _U.list([]),
+                      _U.list([$Html.text(government.rulerTitle)]))]))
+              ,A2($Html.p,
+              _U.list([]),
+              _U.list([$Html.text(government.description)]))
               ,A2(stringListWithTitle,"Unlocked by :",government.unlockedIf)
               ,A2(stringListWithTitle,"Locked by :",government.lockedIf)
               ,A2($Html.h5,_U.list([]),_U.list([$Html.text("Effects :")]))
@@ -41,7 +64,9 @@ Elm.Government.SelectedList.make = function (_elm) {
    });
    var show = F2(function (hoveredGovernment,selectedGovernment) {
       var governments = function () {
-         var _p0 = {ctor: "_Tuple2",_0: hoveredGovernment,_1: selectedGovernment};
+         var _p0 = {ctor: "_Tuple2"
+                   ,_0: hoveredGovernment
+                   ,_1: selectedGovernment};
          if (_p0._0.ctor === "Nothing") {
                if (_p0._1.ctor === "Nothing") {
                      return _U.list([]);
@@ -60,7 +85,10 @@ Elm.Government.SelectedList.make = function (_elm) {
       }();
       return A2($Html.div,
       _U.list([$Html$Attributes.$class("selected-governments")]),
-      A2($List.map,A2(showOne,hoveredGovernment,selectedGovernment),governments));
+      A2($List.map,
+      A2(showOne,hoveredGovernment,selectedGovernment),
+      governments));
    });
-   return _elm.Government.SelectedList.values = {_op: _op,show: show};
+   return _elm.Government.SelectedList.values = {_op: _op
+                                                ,show: show};
 };

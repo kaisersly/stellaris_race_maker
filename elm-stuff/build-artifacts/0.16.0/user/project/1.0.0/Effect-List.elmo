@@ -16,7 +16,15 @@ Elm.Effect.List.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var showOne = function (effect) {    return A2($Html.li,_U.list([]),_U.list([$Effect$View.show(effect)]));};
-   var show = function (effects) {    return A2($Html.ul,_U.list([]),A2($List.map,showOne,effects));};
+   var showOne = function (effect) {
+      return A2($Html.li,
+      _U.list([]),
+      _U.list([$Effect$View.show(effect)]));
+   };
+   var show = function (effects) {
+      return A2($Html.ul,
+      _U.list([]),
+      A2($List.map,showOne,effects));
+   };
    return _elm.Effect.List.values = {_op: _op,show: show};
 };

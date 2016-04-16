@@ -4,7 +4,8 @@ Elm.Effect.Summary.make = function (_elm) {
    "use strict";
    _elm.Effect = _elm.Effect || {};
    _elm.Effect.Summary = _elm.Effect.Summary || {};
-   if (_elm.Effect.Summary.values) return _elm.Effect.Summary.values;
+   if (_elm.Effect.Summary.values)
+   return _elm.Effect.Summary.values;
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
@@ -22,12 +23,26 @@ Elm.Effect.Summary.make = function (_elm) {
       if (_p0.ctor === "Nothing") {
             return A3($Dict.insert,effect.name,effect,dict);
          } else {
-            return A3($Dict.insert,effect.name,_U.update(effect,{amount: effect.amount + _p0._0.amount}),dict);
+            return A3($Dict.insert,
+            effect.name,
+            _U.update(effect,{amount: effect.amount + _p0._0.amount}),
+            dict);
          }
    });
-   var buildEffectDict = function (effects) {    return A3($List.foldl,addEffectToDict,$Dict.empty,effects);};
-   var summarize = function (effects) {    return A2($List.map,$Basics.snd,$Dict.toList(buildEffectDict(effects)));};
+   var buildEffectDict = function (effects) {
+      return A3($List.foldl,addEffectToDict,$Dict.empty,effects);
+   };
+   var summarize = function (effects) {
+      return A2($List.map,
+      $Basics.snd,
+      $Dict.toList(buildEffectDict(effects)));
+   };
    var extractEffects = function (model) {
+      var effectsFromTraits = A2($List.concatMap,
+      function (_) {
+         return _.effects;
+      },
+      model.selectedTraits);
       var effectsFromGovernment = function () {
          var _p1 = model.selectedGovernment;
          if (_p1.ctor === "Nothing") {
@@ -36,8 +51,16 @@ Elm.Effect.Summary.make = function (_elm) {
                return _p1._0.effects;
             }
       }();
-      var effectsFromEthoses = A2($List.concatMap,function (_) {    return _.effects;},model.selectedEthoses);
-      return $List.concat(_U.list([effectsFromEthoses,effectsFromGovernment]));
+      var effectsFromEthoses = A2($List.concatMap,
+      function (_) {
+         return _.effects;
+      },
+      model.selectedEthoses);
+      return $List.concat(_U.list([effectsFromEthoses
+                                  ,effectsFromGovernment
+                                  ,effectsFromTraits]));
    };
-   return _elm.Effect.Summary.values = {_op: _op,extractEffects: extractEffects,summarize: summarize};
+   return _elm.Effect.Summary.values = {_op: _op
+                                       ,extractEffects: extractEffects
+                                       ,summarize: summarize};
 };

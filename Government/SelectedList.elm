@@ -27,7 +27,7 @@ showOne hoveredGovernment selectedGovernment government =
   div
     [ classList
         [ ("government", True)
-        , ("selected", Government.isSelected selectedGovernment government)
+        , ("notselected", not (Government.isSelected selectedGovernment government))
         , ("hovered", Government.isHovered hoveredGovernment government)
         ]
     ]

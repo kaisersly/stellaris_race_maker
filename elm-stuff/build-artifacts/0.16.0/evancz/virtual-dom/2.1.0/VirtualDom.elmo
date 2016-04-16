@@ -17,10 +17,19 @@ Elm.VirtualDom.make = function (_elm) {
    var lazy3 = $Native$VirtualDom.lazy3;
    var lazy2 = $Native$VirtualDom.lazy2;
    var lazy = $Native$VirtualDom.lazy;
-   var defaultOptions = {stopPropagation: false,preventDefault: false};
-   var Options = F2(function (a,b) {    return {stopPropagation: a,preventDefault: b};});
+   var defaultOptions = {stopPropagation: false
+                        ,preventDefault: false};
+   var Options = F2(function (a,b) {
+      return {stopPropagation: a,preventDefault: b};
+   });
    var onWithOptions = $Native$VirtualDom.on;
-   var on = F3(function (eventName,decoder,toMessage) {    return A4($Native$VirtualDom.on,eventName,defaultOptions,decoder,toMessage);});
+   var on = F3(function (eventName,decoder,toMessage) {
+      return A4($Native$VirtualDom.on,
+      eventName,
+      defaultOptions,
+      decoder,
+      toMessage);
+   });
    var attributeNS = $Native$VirtualDom.attributeNS;
    var attribute = $Native$VirtualDom.attribute;
    var property = $Native$VirtualDom.property;

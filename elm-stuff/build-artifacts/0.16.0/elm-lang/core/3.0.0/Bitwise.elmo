@@ -3,7 +3,8 @@ Elm.Bitwise.make = function (_elm) {
    "use strict";
    _elm.Bitwise = _elm.Bitwise || {};
    if (_elm.Bitwise.values) return _elm.Bitwise.values;
-   var _U = Elm.Native.Utils.make(_elm),$Native$Bitwise = Elm.Native.Bitwise.make(_elm);
+   var _U = Elm.Native.Utils.make(_elm),
+   $Native$Bitwise = Elm.Native.Bitwise.make(_elm);
    var _op = {};
    var shiftRightLogical = $Native$Bitwise.shiftRightLogical;
    var shiftRight = $Native$Bitwise.shiftRightArithmatic;

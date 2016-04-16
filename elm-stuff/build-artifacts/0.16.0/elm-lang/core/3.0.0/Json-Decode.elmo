@@ -47,10 +47,17 @@ Elm.Json.Decode.make = function (_elm) {
    var object2 = $Native$Json.decodeObject2;
    var object1 = $Native$Json.decodeObject1;
    _op[":="] = $Native$Json.decodeField;
-   var at = F2(function (fields,decoder) {    return A3($List.foldr,F2(function (x,y) {    return A2(_op[":="],x,y);}),decoder,fields);});
+   var at = F2(function (fields,decoder) {
+      return A3($List.foldr,
+      F2(function (x,y) {    return A2(_op[":="],x,y);}),
+      decoder,
+      fields);
+   });
    var decodeString = $Native$Json.runDecoderString;
    var map = $Native$Json.decodeObject1;
-   var dict = function (decoder) {    return A2(map,$Dict.fromList,keyValuePairs(decoder));};
+   var dict = function (decoder) {
+      return A2(map,$Dict.fromList,keyValuePairs(decoder));
+   };
    var Decoder = {ctor: "Decoder"};
    return _elm.Json.Decode.values = {_op: _op
                                     ,decodeString: decodeString

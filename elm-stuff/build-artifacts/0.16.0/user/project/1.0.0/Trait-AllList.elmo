@@ -15,25 +15,79 @@ Elm.Trait.AllList.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm),
    $Trait = Elm.Trait.make(_elm),
    $Trait$Data = Elm.Trait.Data.make(_elm),
    $Update = Elm.Update.make(_elm);
    var _op = {};
-   var showOne = F4(function (address,hoveredTrait,selectedTraits,trait) {
+   var prefix = function (points) {
+      var sign = _U.cmp(points,0) > 0 ? "+" : "-";
+      var many = A2($String.repeat,$Basics.abs(points),sign);
+      return A2($Basics._op["++"],
+      " (",
+      A2($Basics._op["++"],many,")"));
+   };
+   var showOne = F4(function (address,
+   hoveredTrait,
+   selectedTraits,
+   trait) {
+      var isGreen = _U.cmp(trait.points,0) > 0;
       var isSelected = A2($Trait.isSelected,selectedTraits,trait);
       var onClickAction = isSelected ? $Update.DeselectTrait(trait) : $Update.SelectTrait(trait);
       return A2($Html.li,
-      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2",_0: "trait",_1: true},{ctor: "_Tuple2",_0: "selected",_1: isSelected}]))
+      _U.list([$Html$Attributes.classList(_U.list([{ctor: "_Tuple2"
+                                                   ,_0: "trait"
+                                                   ,_1: true}
+                                                  ,{ctor: "_Tuple2",_0: "selected",_1: isSelected}
+                                                  ,{ctor: "_Tuple2",_0: "green",_1: isGreen}
+                                                  ,{ctor: "_Tuple2",_0: "red",_1: $Basics.not(isGreen)}]))
+              ,A2($Html$Events.onMouseEnter,address,$Update.HoverTrait(trait))
+              ,A2($Html$Events.onMouseLeave,address,$Update.DehoverTrait)
               ,A2($Html$Events.onClick,address,onClickAction)]),
-      _U.list([$Html.text(trait.name)]));
+      _U.list([$Html.text(trait.name)
+              ,$Html.text(prefix(trait.points))]));
    });
    var show = F3(function (address,hoveredTrait,selectedTraits) {
+      var _p0 = A2($List.partition,
+      function (x) {
+         return _U.cmp(x.points,0) > 0;
+      },
+      $Trait$Data.all);
+      var goodTraits = _p0._0;
+      var badTraits = _p0._1;
+      var remainingTraits = $Trait.remainingTraits(selectedTraits);
       var remainingPoints = $Trait.remainingPoints(selectedTraits);
-      var title = A2($Basics._op["++"],"Traits (",A2($Basics._op["++"],$Basics.toString(remainingPoints)," points left)"));
+      var title = A2($Basics._op["++"],
+      "Traits (",
+      A2($Basics._op["++"],
+      $Basics.toString(remainingPoints),
+      A2($Basics._op["++"],
+      " points left - ",
+      A2($Basics._op["++"],
+      $Basics.toString(remainingTraits),
+      " traits left)"))));
       return A2($Html.div,
       _U.list([$Html$Attributes.$class("all-traits")]),
       _U.list([A2($Html.h2,_U.list([]),_U.list([$Html.text(title)]))
-              ,A2($Html.ul,_U.list([]),A2($List.map,A3(showOne,address,hoveredTrait,selectedTraits),$Trait$Data.all))]));
+              ,A2($Html.h4,
+              _U.list([]),
+              _U.list([$Html.text("Positive traits")]))
+              ,A2($Html.ul,
+              _U.list([]),
+              A2($List.map,
+              A3(showOne,address,hoveredTrait,selectedTraits),
+              goodTraits))
+              ,A2($Html.h4,
+              _U.list([]),
+              _U.list([$Html.text("Negative traits")]))
+              ,A2($Html.ul,
+              _U.list([]),
+              A2($List.map,
+              A3(showOne,address,hoveredTrait,selectedTraits),
+              badTraits))]));
    });
-   return _elm.Trait.AllList.values = {_op: _op,showOne: showOne,show: show};
+   return _elm.Trait.AllList.values = {_op: _op
+                                      ,prefix: prefix
+                                      ,showOne: showOne
+                                      ,show: show};
 };

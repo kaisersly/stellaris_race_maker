@@ -20,6 +20,7 @@ Elm.View.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $Trait$AllList = Elm.Trait.AllList.make(_elm),
+   $Trait$SelectedList = Elm.Trait.SelectedList.make(_elm),
    $Update = Elm.Update.make(_elm);
    var _op = {};
    var show = F2(function (address,model) {
@@ -28,28 +29,50 @@ Elm.View.make = function (_elm) {
       _U.list([$Html$Attributes.$class("container-fluid")]),
       _U.list([A2($Html.div,
               _U.list([$Html$Attributes.$class("row")]),
-              _U.list([A2($Html.div,_U.list([$Html$Attributes.$class("col-sm-5")]),_U.list([A2($Ethos$AllList.show,address,model.selectedEthoses)]))
+              _U.list([A2($Html.div,
+                      _U.list([$Html$Attributes.$class("col-sm-5")]),
+                      _U.list([A2($Ethos$AllList.show,
+                      address,
+                      model.selectedEthoses)]))
                       ,A2($Html.div,
                       _U.list([$Html$Attributes.$class("col-sm-7")]),
-                      _U.list([A2($Ethos$SelectedList.show,model.hoveredEthos,model.selectedEthoses)]))]))
+                      _U.list([A2($Ethos$SelectedList.show,
+                      model.hoveredEthos,
+                      model.selectedEthoses)]))]))
               ,A2($Html.div,
               _U.list([$Html$Attributes.$class("row")]),
               _U.list([A2($Html.div,
                       _U.list([$Html$Attributes.$class("col-sm-5")]),
-                      _U.list([A3($Government$AllList.show,address,model.selectedEthoses,model.selectedGovernment)]))
+                      _U.list([A3($Government$AllList.show,
+                      address,
+                      model.selectedEthoses,
+                      model.selectedGovernment)]))
                       ,A2($Html.div,
                       _U.list([$Html$Attributes.$class("col-sm-7")]),
-                      _U.list([A2($Government$SelectedList.show,model.hoveredGovernment,model.selectedGovernment)]))]))
+                      _U.list([A2($Government$SelectedList.show,
+                      model.hoveredGovernment,
+                      model.selectedGovernment)]))]))
               ,A2($Html.div,
               _U.list([$Html$Attributes.$class("row")]),
               _U.list([A2($Html.div,
-              _U.list([$Html$Attributes.$class("col-sm-5")]),
-              _U.list([A3($Trait$AllList.show,address,model.hoveredTrait,model.selectedTraits)]))]))
+                      _U.list([$Html$Attributes.$class("col-sm-5")]),
+                      _U.list([A3($Trait$AllList.show,
+                      address,
+                      model.hoveredTrait,
+                      model.selectedTraits)]))
+                      ,A2($Html.div,
+                      _U.list([$Html$Attributes.$class("col-sm-7")]),
+                      _U.list([A2($Trait$SelectedList.show,
+                      model.hoveredTrait,
+                      model.selectedTraits)]))]))
               ,A2($Html.div,
               _U.list([$Html$Attributes.$class("row")]),
               _U.list([A2($Html.div,
               _U.list([$Html$Attributes.$class("col-sm-12")]),
-              _U.list([A2($Html.h2,_U.list([]),_U.list([$Html.text("Summary")])),$Effect$Summary$View.show(effects)]))]))]));
+              _U.list([A2($Html.h2,
+                      _U.list([]),
+                      _U.list([$Html.text("Summary")]))
+                      ,$Effect$Summary$View.show(effects)]))]))]));
    });
    return _elm.View.values = {_op: _op,show: show};
 };

@@ -12,7 +12,9 @@ Elm.Trait.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var isSelected = F2(function (selectedTraits,trait) {    return A2($List.member,trait,selectedTraits);});
+   var isSelected = F2(function (selectedTraits,trait) {
+      return A2($List.member,trait,selectedTraits);
+   });
    var isHovered = F2(function (hoveredTrait,trait) {
       var _p0 = hoveredTrait;
       if (_p0.ctor === "Nothing") {
@@ -22,11 +24,47 @@ Elm.Trait.make = function (_elm) {
          }
    });
    var pointsLimit = 2;
-   var countPoints = function (traits) {    return $List.sum(A2($List.map,function (_) {    return _.points;},traits));};
-   var remainingPoints = function (traits) {    return pointsLimit - countPoints(traits);};
+   var countPoints = function (traits) {
+      return $List.sum(A2($List.map,
+      function (_) {
+         return _.points;
+      },
+      traits));
+   };
+   var remainingPoints = function (traits) {
+      return pointsLimit - countPoints(traits);
+   };
    var traitsLimit = 4;
-   var Trait = F5(function (a,b,c,d,e) {    return {family: a,name: b,description: c,points: d,effects: e};});
+   var remainingTraits = function (traits) {
+      return traitsLimit - $List.length(traits);
+   };
+   var Trait = F5(function (a,b,c,d,e) {
+      return {family: a
+             ,name: b
+             ,description: c
+             ,points: d
+             ,effects: e};
+   });
    var None = {ctor: "None"};
+   var ofSameFamily = F2(function (traits,trait) {
+      return A2($List.map,
+      function (_) {
+         return _.name;
+      },
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x,trait);
+      },
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x.family,None);
+      },
+      A2($List.filter,
+      function (x) {
+         return _U.eq(x.family,trait.family);
+      },
+      traits))));
+   });
    var VeryStrongWeak = {ctor: "VeryStrongWeak"};
    var RapidSlowBreeders = {ctor: "RapidSlowBreeders"};
    var QuickSlowLearners = {ctor: "QuickSlowLearners"};
@@ -40,7 +78,8 @@ Elm.Trait.make = function (_elm) {
                               ,remainingPoints: remainingPoints
                               ,isHovered: isHovered
                               ,isSelected: isSelected
-                              ,traitsLimit: traitsLimit
+                              ,remainingTraits: remainingTraits
+                              ,ofSameFamily: ofSameFamily
                               ,Trait: Trait
                               ,ExtremelyNonAdaptive: ExtremelyNonAdaptive
                               ,CharismaticRepugnant: CharismaticRepugnant

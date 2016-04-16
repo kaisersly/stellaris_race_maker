@@ -19,32 +19,40 @@ Elm.Ethos.Data.make = function (_elm) {
                       ,name: "Fanatic Collectivist"
                       ,points: 2
                       ,description: "The purpose of the individual is simple: strengthen the collective. To enter the blackness of space we move as one, and we shall not be weakened by wanton separatism."
-                      ,effects: _U.list([$Effect$Factory.slaveryTolerance(100),$Effect$Factory.foodRequirement(-10)])}
+                      ,effects: _U.list([$Effect$Factory.slaveryTolerance(100)
+                                        ,$Effect$Factory.foodRequirement(-10)])}
                      ,{dichotomy: $Ethos.CollectivistIndividualist
                       ,name: "Collectivist"
                       ,points: 1
                       ,description: "Society has long since evolved past the insignificant rivalries and concerns of the individuals. We are numerous but one, and the needs of the many outweigh the needs of the few. We stand truly equal."
-                      ,effects: _U.list([$Effect$Factory.slaveryTolerance(50),$Effect$Factory.foodRequirement(-5)])}
+                      ,effects: _U.list([$Effect$Factory.slaveryTolerance(50)
+                                        ,$Effect$Factory.foodRequirement(-5)])}
                      ,{dichotomy: $Ethos.CollectivistIndividualist
                       ,name: "Individualist"
                       ,points: 1
                       ,description: "Community is a means to an end, not the end itself. Only by empowering the individual to reach their maximum potential do we achieve true freedom. Freedom of thought, of speech, of movement, of trade."
-                      ,effects: _U.list([$Effect$Factory.energyCredits(10),$Effect$Factory.slaveryTolerance(-50),$Effect$Factory.ethicsDivergence(5)])}
+                      ,effects: _U.list([$Effect$Factory.energyCredits(10)
+                                        ,$Effect$Factory.slaveryTolerance(-50)
+                                        ,$Effect$Factory.ethicsDivergence(5)])}
                      ,{dichotomy: $Ethos.CollectivistIndividualist
                       ,name: "Fanatic Individualist"
                       ,points: 2
                       ,description: "Through history, too often has the hulking mass of the collective stifled the radiant genius of individuals. No more. Forge your own path, and let new fruits be illuminated by the sparks of clashing ambitions."
-                      ,effects: _U.list([$Effect$Factory.energyCredits(20),$Effect$Factory.slaveryTolerance(-100),$Effect$Factory.ethicsDivergence(10)])}
+                      ,effects: _U.list([$Effect$Factory.energyCredits(20)
+                                        ,$Effect$Factory.slaveryTolerance(-100)
+                                        ,$Effect$Factory.ethicsDivergence(10)])}
                      ,{dichotomy: $Ethos.XenophobeXenophile
                       ,name: "Fanatic Xenophobe"
                       ,points: 2
                       ,description: "We must guard ourselves against the alien elements that would disrupt our society, the influences that would debase our genetic and cultural heritage. The Other is to be held at arm\'s length, and that arm is to hold a sword."
-                      ,effects: _U.list([$Effect$Factory.alienSlaveryTolerance(100),$Effect$Factory.xenophobia(20)])}
+                      ,effects: _U.list([$Effect$Factory.alienSlaveryTolerance(100)
+                                        ,$Effect$Factory.xenophobia(20)])}
                      ,{dichotomy: $Ethos.XenophobeXenophile
                       ,name: "Xenophobe"
                       ,points: 1
                       ,description: "A homogeneous society is a predictable society. A predictable society is a safe society. There is little to be gained by giving excessive attention or care for those who do not belong."
-                      ,effects: _U.list([$Effect$Factory.alienSlaveryTolerance(50),$Effect$Factory.xenophobia(10)])}
+                      ,effects: _U.list([$Effect$Factory.alienSlaveryTolerance(50)
+                                        ,$Effect$Factory.xenophobia(10)])}
                      ,{dichotomy: $Ethos.XenophobeXenophile
                       ,name: "Xenophile"
                       ,points: 1
@@ -93,12 +101,16 @@ Elm.Ethos.Data.make = function (_elm) {
                       ,name: "Fanatic Materialist"
                       ,points: 2
                       ,description: "Although it hurts, we must grow up and put aside our outdated notions of morality. There is no \'divine spark\' granting special value to a living mind. No object has any intrinsic value apart from what we choose to grant it. Let us embrace the freedom of certitude, and achieve maximum efficiency in all things."
-                      ,effects: _U.list([$Effect$Factory.physicsOutput(10),$Effect$Factory.societyOutput(10),$Effect$Factory.engineeringOutput(10)])}
+                      ,effects: _U.list([$Effect$Factory.physicsOutput(10)
+                                        ,$Effect$Factory.societyOutput(10)
+                                        ,$Effect$Factory.engineeringOutput(10)])}
                      ,{dichotomy: $Ethos.MaterialistSpiritualist
                       ,name: "Materialist"
                       ,points: 1
                       ,description: "As we reach for the stars, we must put away childish things: gods, spirits and other phantasms of the brain. Reality is cruel and unforgiving, yet we must protect ourselves and secure the survival of our race through the unflinching pursuit of science and technology."
-                      ,effects: _U.list([$Effect$Factory.physicsOutput(5),$Effect$Factory.societyOutput(5),$Effect$Factory.engineeringOutput(5)])}
+                      ,effects: _U.list([$Effect$Factory.physicsOutput(5)
+                                        ,$Effect$Factory.societyOutput(5)
+                                        ,$Effect$Factory.engineeringOutput(5)])}
                      ,{dichotomy: $Ethos.MaterialistSpiritualist
                       ,name: "Spiritualist"
                       ,points: 1

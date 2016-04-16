@@ -13,25 +13,53 @@ Elm.Signal.make = function (_elm) {
    var _op = {};
    var send = F2(function (_p0,value) {
       var _p1 = _p0;
-      return A2($Task.onError,_p1._0(value),function (_p2) {    return $Task.succeed({ctor: "_Tuple0"});});
+      return A2($Task.onError,
+      _p1._0(value),
+      function (_p2) {
+         return $Task.succeed({ctor: "_Tuple0"});
+      });
    });
-   var Message = function (a) {    return {ctor: "Message",_0: a};};
-   var message = F2(function (_p3,value) {    var _p4 = _p3;return Message(_p4._0(value));});
+   var Message = function (a) {
+      return {ctor: "Message",_0: a};
+   };
+   var message = F2(function (_p3,value) {
+      var _p4 = _p3;
+      return Message(_p4._0(value));
+   });
    var mailbox = $Native$Signal.mailbox;
-   var Address = function (a) {    return {ctor: "Address",_0: a};};
-   var forwardTo = F2(function (_p5,f) {    var _p6 = _p5;return Address(function (x) {    return _p6._0(f(x));});});
-   var Mailbox = F2(function (a,b) {    return {address: a,signal: b};});
+   var Address = function (a) {
+      return {ctor: "Address",_0: a};
+   };
+   var forwardTo = F2(function (_p5,f) {
+      var _p6 = _p5;
+      return Address(function (x) {    return _p6._0(f(x));});
+   });
+   var Mailbox = F2(function (a,b) {
+      return {address: a,signal: b};
+   });
    var sampleOn = $Native$Signal.sampleOn;
    var dropRepeats = $Native$Signal.dropRepeats;
    var filterMap = $Native$Signal.filterMap;
    var filter = F3(function (isOk,base,signal) {
-      return A3(filterMap,function (value) {    return isOk(value) ? $Maybe.Just(value) : $Maybe.Nothing;},base,signal);
+      return A3(filterMap,
+      function (value) {
+         return isOk(value) ? $Maybe.Just(value) : $Maybe.Nothing;
+      },
+      base,
+      signal);
    });
-   var merge = F2(function (left,right) {    return A3($Native$Signal.genericMerge,$Basics.always,left,right);});
+   var merge = F2(function (left,right) {
+      return A3($Native$Signal.genericMerge,
+      $Basics.always,
+      left,
+      right);
+   });
    var mergeMany = function (signalList) {
       var _p7 = $List.reverse(signalList);
       if (_p7.ctor === "[]") {
-            return _U.crashCase("Signal",{start: {line: 184,column: 3},end: {line: 189,column: 40}},_p7)("mergeMany was given an empty list!");
+            return _U.crashCase("Signal",
+            {start: {line: 184,column: 3},end: {line: 189,column: 40}},
+            _p7)("mergeMany was given an empty list!");
          } else {
             return A3($List.foldl,merge,_p7._0,_p7._1);
          }

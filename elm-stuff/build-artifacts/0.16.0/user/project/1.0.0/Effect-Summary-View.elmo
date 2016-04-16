@@ -6,7 +6,8 @@ Elm.Effect.Summary.View.make = function (_elm) {
    _elm.Effect = _elm.Effect || {};
    _elm.Effect.Summary = _elm.Effect.Summary || {};
    _elm.Effect.Summary.View = _elm.Effect.Summary.View || {};
-   if (_elm.Effect.Summary.View.values) return _elm.Effect.Summary.View.values;
+   if (_elm.Effect.Summary.View.values)
+   return _elm.Effect.Summary.View.values;
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
@@ -21,12 +22,17 @@ Elm.Effect.Summary.View.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
    var show = function (effects) {
-      var _p0 = A2($List.partition,function (x) {    return _U.eq(x.amount,0);},effects);
+      var _p0 = A2($List.partition,
+      function (x) {
+         return _U.eq(x.amount,0);
+      },
+      effects);
       var simpleEffects = _p0._0;
       var effectsWithAmount = _p0._1;
       return A2($Html.div,
       _U.list([$Html$Attributes.$class("effects")]),
-      _U.list([$Effect$List.show(simpleEffects),$Effect$List.show($Effect$Summary.summarize(effectsWithAmount))]));
+      _U.list([$Effect$List.show(simpleEffects)
+              ,$Effect$List.show($Effect$Summary.summarize(effectsWithAmount))]));
    };
    return _elm.Effect.Summary.View.values = {_op: _op,show: show};
 };

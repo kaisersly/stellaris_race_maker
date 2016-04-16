@@ -15,7 +15,7 @@ showOne hoveredEthos selectedEthoses ethos =
   div
     [ classList
         [ ("ethos", True)
-        , ("selected", Ethos.isSelected selectedEthoses ethos)
+        , ("notselected", not (Ethos.isSelected selectedEthoses ethos))
         , ("hovered", Ethos.isHovered hoveredEthos ethos)
         ]
     ]
