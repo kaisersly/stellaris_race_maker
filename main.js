@@ -12917,7 +12917,7 @@ Elm.Trait.Data.make = function (_elm) {
                       ,name: "Communal"
                       ,description: "Members of this species are highly communal and quite used to living in close proximity to others."
                       ,points: 1
-                      ,effects: _U.list([$Effect$Factory.happiness(1)])}
+                      ,effects: _U.list([$Effect$Factory.happiness(5)])}
                      ,{family: $Trait.None
                       ,name: "Conformists"
                       ,description: "These people always seek consensus and are more likely to conform to the governing ethics."
