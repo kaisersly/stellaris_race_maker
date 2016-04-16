@@ -153,7 +153,7 @@ all =
         [ coreSectorPlanets 4
         ]
     }
-  , { name = "Moral Bureaucracy"
+  , { name = "Moral Democracy"
     , description = "This government is a pacifistic form of democracy, firmly guided by moralist principles and non-violence."
     , rulerTitle = ""
     , unlockedIf = ["Pacifist", "Fanatic Pacifist"]

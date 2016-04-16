@@ -12707,7 +12707,7 @@ Elm.Government.Data.make = function (_elm) {
                       ,unlockedIf: _U.list(["Materialist","Fanatic Materialist"])
                       ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
                       ,effects: _U.list([$Effect$Factory.coreSectorPlanets(4)])}
-                     ,{name: "Moral Bureaucracy"
+                     ,{name: "Moral Democracy"
                       ,description: "This government is a pacifistic form of democracy, firmly guided by moralist principles and non-violence."
                       ,rulerTitle: ""
                       ,unlockedIf: _U.list(["Pacifist","Fanatic Pacifist"])
