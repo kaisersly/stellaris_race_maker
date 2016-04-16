@@ -11939,19 +11939,35 @@ Elm.Government.make = function (_elm) {
       selectedEthoses);
       return isUnlockedByEthoses && $Basics.not(isLockedByEthoses);
    });
-   var Government = F6(function (a,b,c,d,e,f) {
+   var Government = F8(function (a,b,c,d,e,f,g,h) {
       return {name: a
-             ,description: b
-             ,rulerTitle: c
-             ,unlockedIf: d
-             ,lockedIf: e
-             ,effects: f};
+             ,imgUrl: b
+             ,form$: c
+             ,description: d
+             ,rulerTitle: e
+             ,unlockedIf: f
+             ,lockedIf: g
+             ,effects: h};
    });
+   var governmentFormToString = function (form$) {
+      var _p2 = form$;
+      switch (_p2.ctor)
+      {case "Autocracy": return "Autocracy";
+         case "Oligarchy": return "Oligarchy";
+         default: return "Democracy";}
+   };
+   var Democracy = {ctor: "Democracy"};
+   var Oligarchy = {ctor: "Oligarchy"};
+   var Autocracy = {ctor: "Autocracy"};
    return _elm.Government.values = {_op: _op
+                                   ,governmentFormToString: governmentFormToString
                                    ,isAvailable: isAvailable
                                    ,isHovered: isHovered
                                    ,isSelected: isSelected
-                                   ,Government: Government};
+                                   ,Government: Government
+                                   ,Autocracy: Autocracy
+                                   ,Oligarchy: Oligarchy
+                                   ,Democracy: Democracy};
 };
 Elm.Trait = Elm.Trait || {};
 Elm.Trait.make = function (_elm) {
@@ -12067,15 +12083,17 @@ Elm.Model.make = function (_elm) {
                       ,hoveredEthos: $Maybe.Nothing
                       ,selectedGovernment: $Maybe.Nothing
                       ,hoveredGovernment: $Maybe.Nothing
+                      ,hoveredGovernmentForm: $Maybe.Nothing
                       ,selectedTraits: _U.list([])
                       ,hoveredTrait: $Maybe.Nothing};
-   var Model = F6(function (a,b,c,d,e,f) {
+   var Model = F7(function (a,b,c,d,e,f,g) {
       return {selectedEthoses: a
              ,hoveredEthos: b
              ,selectedGovernment: c
              ,hoveredGovernment: d
-             ,selectedTraits: e
-             ,hoveredTrait: f};
+             ,hoveredGovernmentForm: e
+             ,selectedTraits: f
+             ,hoveredTrait: g};
    });
    return _elm.Model.values = {_op: _op
                               ,initialModel: initialModel
@@ -12212,6 +12230,10 @@ Elm.Update.make = function (_elm) {
    var SelectTrait = function (a) {
       return {ctor: "SelectTrait",_0: a};
    };
+   var DehoverGovernmentForm = {ctor: "DehoverGovernmentForm"};
+   var HoverGovernmentForm = function (a) {
+      return {ctor: "HoverGovernmentForm",_0: a};
+   };
    var DehoverGovernment = {ctor: "DehoverGovernment"};
    var HoverGovernment = function (a) {
       return {ctor: "HoverGovernment",_0: a};
@@ -12284,6 +12306,10 @@ Elm.Update.make = function (_elm) {
            {hoveredGovernment: $Maybe.Just(_p1._0)});
          case "DehoverGovernment": return _U.update(model,
            {hoveredGovernment: $Maybe.Nothing});
+         case "HoverGovernmentForm": return _U.update(model,
+           {hoveredGovernmentForm: $Maybe.Just(_p1._0)});
+         case "DehoverGovernmentForm": return _U.update(model,
+           {hoveredGovernmentForm: $Maybe.Nothing});
          case "SelectTrait": var _p3 = _p1._0;
            var newTraits = _U.eq(_p3.family,
            $Trait.None) ? A2($Basics._op["++"],
@@ -12320,6 +12346,8 @@ Elm.Update.make = function (_elm) {
                                ,DeselectGovernment: DeselectGovernment
                                ,HoverGovernment: HoverGovernment
                                ,DehoverGovernment: DehoverGovernment
+                               ,HoverGovernmentForm: HoverGovernmentForm
+                               ,DehoverGovernmentForm: DehoverGovernmentForm
                                ,SelectTrait: SelectTrait
                                ,DeselectTrait: DeselectTrait
                                ,HoverTrait: HoverTrait
@@ -12603,7 +12631,19 @@ Elm.Government.Data.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
+   var governmentForm = function (form$) {
+      var _p0 = form$;
+      switch (_p0.ctor)
+      {case "Autocracy":
+         return "An autocracy is a form of government where power is held by a single individual, e.g., a monarch or a dictator.\n\nA nation that possesses individualism or fanatic individualism ethos are not able to use this type of governance.\n\nThere are no elections and leaders rule until their death. In most autocratic governments there is a predetermined heir, though in military dictatorship successor is decided after death of dictator. ";
+         case "Oligarchy":
+         return "An oligarchy is a form of government where power is held by a group of individuals, e.g., a scientific organization or a priestly convocation.\n\nA nation that possesses fanatic collectivism or fanatic individualism ethos are not able to use this type of governance.\n\nElections occur far apart in time, usually every 40 to 50 years. Existing leaders of specific type within the empire are eligible for election, generally governors. If empire has not enough leaders of proper type (apparently four, including current leader running for another term), they will be generated for the election. ";
+         default:
+         return "A democracy is a form of government where power is generally distributed by the population and periodically a new leader is elected to represent them, e.g., representative or direct democracy.\n\nA nation that possesses collectivism or fanatic collectivism ethos are not able to use this type of governance.\n\nElections occur regularly every 5 years. ";}
+   };
    var all = _U.list([{name: "Military Dictatorship"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/4/4c/Military_Dictatorship.png/63px-Military_Dictatorship.png"
+                      ,form$: $Government.Autocracy
                       ,description: "This government is a militaristic form of autocracy, with the ruler serving as the undisputed head of the military which is firmly in control of the state apparatus."
                       ,rulerTitle: "Grand Marshal"
                       ,unlockedIf: _U.list(["Militarist","Fanatic Militarist"])
@@ -12613,6 +12653,8 @@ Elm.Government.Data.make = function (_elm) {
                                         ,$Effect$Factory.simpleEffect("Can build an oversized ship")
                                         ,$Effect$Factory.simpleEffect("Admirals/generals are eligible for rulership")])}
                      ,{name: "Divine Mandate"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/7/7f/Divine_Mandate.png/63px-Divine_Mandate.png"
+                      ,form$: $Government.Autocracy
                       ,description: "This government is a spiritualistic form of autocracy, where the ruler is treated as a divine symbol. Organized religion is widely employed in support of the state apparatus."
                       ,rulerTitle: "Archprophet"
                       ,unlockedIf: _U.list(["Spiritualist","Fanatic Spiritualist"])
@@ -12621,6 +12663,8 @@ Elm.Government.Data.make = function (_elm) {
                                         ,$Effect$Factory.warTolerance(50)
                                         ,$Effect$Factory.simpleEffect("Can build a mausoleum, which grants -10% ethics divergence on the planet on which it is built")])}
                      ,{name: "Despotic Hegemony"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/a/a7/Despotic_Hegemony.png/63px-Despotic_Hegemony.png"
+                      ,form$: $Government.Autocracy
                       ,description: "This government is a materialistic form of autocracy, where citizens are viewed as little more than cogs in the state machinery. Efficiency and technological progress are valued above all things."
                       ,rulerTitle: "Overseer"
                       ,unlockedIf: _U.list(["Materialist","Fanatic Materialist"])
@@ -12629,6 +12673,8 @@ Elm.Government.Data.make = function (_elm) {
                                         ,$Effect$Factory.surveySpeed(10)
                                         ,$Effect$Factory.simpleEffect("Can build an elite assault army")])}
                      ,{name: "Enlightened Monarchy"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/2/2b/Enlightened_Monarchy.png/63px-Enlightened_Monarchy.png"
+                      ,form$: $Government.Autocracy
                       ,description: ""
                       ,rulerTitle: ""
                       ,unlockedIf: _U.list(["Pacifist","Fanatic Pacifist"])
@@ -12638,6 +12684,8 @@ Elm.Government.Data.make = function (_elm) {
                                         ,$Effect$Factory.coreSectorPlanets(1)
                                         ,$Effect$Factory.simpleEffect("Can build a special park building")])}
                      ,{name: "Despotic Empire"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/1/1d/Despotic_Empire.png/63px-Despotic_Empire.png"
+                      ,form$: $Government.Autocracy
                       ,description: "This government is a relatively pure form of autocracy, with an absolute ruler that governs the state with an iron gripping appendage."
                       ,rulerTitle: "Emperor"
                       ,unlockedIf: _U.list([])
@@ -12647,6 +12695,8 @@ Elm.Government.Data.make = function (_elm) {
                                         ,$Effect$Factory.slaveFoodOutput(10)
                                         ,$Effect$Factory.simpleEffect("Can build an oversized military station")])}
                      ,{name: "Military Junta"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/9/9a/Military_Junta.png/63px-Military_Junta.png"
+                      ,form$: $Government.Oligarchy
                       ,description: "This government is a militaristic form of oligarchy, where power rests with a council of high-ranking military officers who oversee all matters of state."
                       ,rulerTitle: "Archon"
                       ,unlockedIf: _U.list(["Militarist","Fanatic Militarist"])
@@ -12656,6 +12706,8 @@ Elm.Government.Data.make = function (_elm) {
                                         ,$Effect$Factory.shipUpgradeCost(-25)
                                         ,$Effect$Factory.simpleEffect("Admirals/generals are eligible for rulership")])}
                      ,{name: "Theocratic Oligarchy"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/5/57/Theocratic_Oligarchy.png/63px-Theocratic_Oligarchy.png"
+                      ,form$: $Government.Oligarchy
                       ,description: ""
                       ,rulerTitle: "Inquisitor"
                       ,unlockedIf: _U.list(["Spiritualist","Fanatic Spiritualist"])
@@ -12663,6 +12715,8 @@ Elm.Government.Data.make = function (_elm) {
                                          ,"Fanatic Individualist"])
                       ,effects: _U.list([$Effect$Factory.ethicsDivergence(-10)])}
                      ,{name: "Science Directorate"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/c/cd/Science_Directorate.png/63px-Science_Directorate.png"
+                      ,form$: $Government.Oligarchy
                       ,description: "This government is a materialist form of oligarchy, where a committee of scientists supervises the government apparatus for maximum efficiency."
                       ,rulerTitle: "Director"
                       ,unlockedIf: _U.list(["Materialist","Fanatic Materialist"])
@@ -12671,6 +12725,8 @@ Elm.Government.Data.make = function (_elm) {
                       ,effects: _U.list([$Effect$Factory.researchAlternative(1)
                                         ,$Effect$Factory.simpleEffect("Scientists are eligible for Leadership")])}
                      ,{name: "Peaceful Bureaucracy"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/c/cd/Peaceful_Bureaucracy.png/63px-Peaceful_Bureaucracy.png"
+                      ,form$: $Government.Oligarchy
                       ,description: "This government is a pacifist form of oligarchy, where a complicated system of bureaucracy governs all aspects of society to ensure the safety of the citizenry."
                       ,rulerTitle: "Coordinator"
                       ,unlockedIf: _U.list(["Pacifist","Fanatic Pacifist"])
@@ -12679,6 +12735,8 @@ Elm.Government.Data.make = function (_elm) {
                       ,effects: _U.list([$Effect$Factory.leaderCapacity(4)
                                         ,$Effect$Factory.leaderRecruitmentCost(-15)])}
                      ,{name: "Plutocratic Oligarchy"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/3/3e/Plutocratic_Oligarchy.png/63px-Plutocratic_Oligarchy.png"
+                      ,form$: $Government.Oligarchy
                       ,description: "This is a plutocratic form of oligarchy, ruled by a wealthy elite. A citizen\'s personal wealth translates directly into political power."
                       ,rulerTitle: "Executive"
                       ,unlockedIf: _U.list([])
@@ -12687,6 +12745,8 @@ Elm.Government.Data.make = function (_elm) {
                       ,effects: _U.list([$Effect$Factory.energyCredits(5)
                                         ,$Effect$Factory.minerals(5)])}
                      ,{name: "Military Republic"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/b/b8/Military_Republic.png/63px-Military_Republic.png"
+                      ,form$: $Government.Democracy
                       ,description: ""
                       ,rulerTitle: "Consul"
                       ,unlockedIf: _U.list(["Militarist","Fanatic Militarist"])
@@ -12696,31 +12756,41 @@ Elm.Government.Data.make = function (_elm) {
                                         ,$Effect$Factory.warTolerance(25)
                                         ,$Effect$Factory.simpleEffect("Admirals/generals are eligible for rulership")])}
                      ,{name: "Theocratic Republic"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/9/9f/Theocratic_Republic.png/63px-Theocratic_Republic.png"
+                      ,form$: $Government.Democracy
                       ,description: ""
                       ,rulerTitle: ""
                       ,unlockedIf: _U.list(["Spiritualist","Fanatic Spiritualist"])
                       ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
                       ,effects: _U.list([$Effect$Factory.ethicsDivergence(-10)])}
                      ,{name: "Direct Democracy"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/0/02/Direct_Democracy.png/63px-Direct_Democracy.png"
+                      ,form$: $Government.Democracy
                       ,description: "This government is a materialistic form of democracy, where citizens use computer networks to vote directly on most matters regarding the state."
                       ,rulerTitle: "Chancellor"
                       ,unlockedIf: _U.list(["Materialist","Fanatic Materialist"])
                       ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
                       ,effects: _U.list([$Effect$Factory.coreSectorPlanets(4)])}
                      ,{name: "Moral Democracy"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/6/67/Moral_Democracy.png/63px-Moral_Democracy.png"
+                      ,form$: $Government.Democracy
                       ,description: "This government is a pacifistic form of democracy, firmly guided by moralist principles and non-violence."
                       ,rulerTitle: ""
                       ,unlockedIf: _U.list(["Pacifist","Fanatic Pacifist"])
                       ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
                       ,effects: _U.list([$Effect$Factory.happiness(10)])}
                      ,{name: "Indirect Democracy"
+                      ,imgUrl: "http://www.stellariswiki.com/images/thumb/a/a1/Indirect_Democracy.png/63px-Indirect_Democracy.png"
+                      ,form$: $Government.Democracy
                       ,description: "This government is an indirect democracy, where citizens vote on officials who are elected to represent them."
                       ,rulerTitle: "President"
                       ,unlockedIf: _U.list([])
                       ,lockedIf: _U.list(["Collectivist","Fanatic Collectivist"])
                       ,effects: _U.list([$Effect$Factory.leaderSkillLevels(1)
                                         ,$Effect$Factory.leaderRecruitmentCost(-10)])}]);
-   return _elm.Government.Data.values = {_op: _op,all: all};
+   return _elm.Government.Data.values = {_op: _op
+                                        ,all: all
+                                        ,governmentForm: governmentForm};
 };
 Elm.Government = Elm.Government || {};
 Elm.Government.AllList = Elm.Government.AllList || {};
@@ -12745,6 +12815,17 @@ Elm.Government.AllList.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $Update = Elm.Update.make(_elm);
    var _op = {};
+   var showGovernmentForm = F2(function (address,form$) {
+      return A2($Html.h4,
+      _U.list([$Html$Attributes.$class("government-form")
+              ,A2($Html$Events.onMouseEnter,
+              address,
+              $Update.HoverGovernmentForm(form$))
+              ,A2($Html$Events.onMouseLeave,
+              address,
+              $Update.DehoverGovernmentForm)]),
+      _U.list([$Html.text($Government.governmentFormToString(form$))]));
+   });
    var showOne = F4(function (address,
    selectedEthoses,
    selectedGovernment,
@@ -12769,21 +12850,60 @@ Elm.Government.AllList.make = function (_elm) {
               $Update.HoverGovernment(government))
               ,A2($Html$Events.onMouseLeave,address,$Update.DehoverGovernment)
               ,A2($Html$Events.onClick,address,onClickAction)]),
-      _U.list([$Html.text(government.name)]));
+      _U.list([A2($Html.img,
+              _U.list([$Html$Attributes.src(government.imgUrl)]),
+              _U.list([]))
+              ,A2($Html.p,
+              _U.list([]),
+              _U.list([$Html.text(government.name)]))]));
    });
    var show = F3(function (address,
    selectedEthoses,
    selectedGovernment) {
+      var democracies = A2($List.filter,
+      function (x) {
+         return _U.eq(x.form$,$Government.Democracy);
+      },
+      $Government$Data.all);
+      var oligarchies = A2($List.filter,
+      function (x) {
+         return _U.eq(x.form$,$Government.Oligarchy);
+      },
+      $Government$Data.all);
+      var autocracies = A2($List.filter,
+      function (x) {
+         return _U.eq(x.form$,$Government.Autocracy);
+      },
+      $Government$Data.all);
       return A2($Html.div,
-      _U.list([$Html$Attributes.$class("all-governments")]),
+      _U.list([$Html$Attributes.$class("all-governments row")]),
       _U.list([A2($Html.h2,
               _U.list([]),
               _U.list([$Html.text("Government")]))
-              ,A2($Html.ul,
-              _U.list([]),
-              A2($List.map,
-              A3(showOne,address,selectedEthoses,selectedGovernment),
-              $Government$Data.all))]));
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.$class("col-sm-4")]),
+              _U.list([A2(showGovernmentForm,address,$Government.Autocracy)
+                      ,A2($Html.ul,
+                      _U.list([]),
+                      A2($List.map,
+                      A3(showOne,address,selectedEthoses,selectedGovernment),
+                      autocracies))]))
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.$class("col-sm-4")]),
+              _U.list([A2(showGovernmentForm,address,$Government.Oligarchy)
+                      ,A2($Html.ul,
+                      _U.list([]),
+                      A2($List.map,
+                      A3(showOne,address,selectedEthoses,selectedGovernment),
+                      oligarchies))]))
+              ,A2($Html.div,
+              _U.list([$Html$Attributes.$class("col-sm-4")]),
+              _U.list([A2(showGovernmentForm,address,$Government.Democracy)
+                      ,A2($Html.ul,
+                      _U.list([]),
+                      A2($List.map,
+                      A3(showOne,address,selectedEthoses,selectedGovernment),
+                      democracies))]))]));
    });
    return _elm.Government.AllList.values = {_op: _op,show: show};
 };
@@ -12800,6 +12920,7 @@ Elm.Government.SelectedList.make = function (_elm) {
    $Debug = Elm.Debug.make(_elm),
    $Effect$Summary$View = Elm.Effect.Summary.View.make(_elm),
    $Government = Elm.Government.make(_elm),
+   $Government$Data = Elm.Government.Data.make(_elm),
    $Html = Elm.Html.make(_elm),
    $Html$Attributes = Elm.Html.Attributes.make(_elm),
    $List = Elm.List.make(_elm),
@@ -12807,6 +12928,16 @@ Elm.Government.SelectedList.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
+   var showGovernmentForm = function (form$) {
+      return A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Html.h4,
+              _U.list([]),
+              _U.list([$Html.text($Government.governmentFormToString(form$))]))
+              ,A2($Html.p,
+              _U.list([]),
+              _U.list([$Html.text($Government$Data.governmentForm(form$))]))]));
+   };
    var stringListWithTitle = F2(function (title,list) {
       return $List.isEmpty(list) ? $Html.text("") : A2($Html.div,
       _U.list([]),
@@ -12851,7 +12982,9 @@ Elm.Government.SelectedList.make = function (_elm) {
               ,A2($Html.h5,_U.list([]),_U.list([$Html.text("Effects :")]))
               ,$Effect$Summary$View.show(government.effects)]));
    });
-   var show = F2(function (hoveredGovernment,selectedGovernment) {
+   var show = F3(function (hoveredGovernmentForm,
+   hoveredGovernment,
+   selectedGovernment) {
       var governments = function () {
          var _p0 = {ctor: "_Tuple2"
                    ,_0: hoveredGovernment
@@ -12872,11 +13005,18 @@ Elm.Government.SelectedList.make = function (_elm) {
                   }
             }
       }();
-      return A2($Html.div,
-      _U.list([$Html$Attributes.$class("selected-governments")]),
-      A2($List.map,
-      A2(showOne,hoveredGovernment,selectedGovernment),
-      governments));
+      var _p3 = hoveredGovernmentForm;
+      if (_p3.ctor === "Nothing") {
+            return A2($Html.div,
+            _U.list([$Html$Attributes.$class("selected-governments")]),
+            A2($List.map,
+            A2(showOne,hoveredGovernment,selectedGovernment),
+            governments));
+         } else {
+            return A2($Html.div,
+            _U.list([$Html$Attributes.$class("hovered-government-form")]),
+            _U.list([showGovernmentForm(_p3._0)]));
+         }
    });
    return _elm.Government.SelectedList.values = {_op: _op
                                                 ,show: show};
@@ -13285,7 +13425,8 @@ Elm.View.make = function (_elm) {
                       model.selectedGovernment)]))
                       ,A2($Html.div,
                       _U.list([$Html$Attributes.$class("col-sm-7")]),
-                      _U.list([A2($Government$SelectedList.show,
+                      _U.list([A3($Government$SelectedList.show,
+                      model.hoveredGovernmentForm,
                       model.hoveredGovernment,
                       model.selectedGovernment)]))]))
               ,A2($Html.div,

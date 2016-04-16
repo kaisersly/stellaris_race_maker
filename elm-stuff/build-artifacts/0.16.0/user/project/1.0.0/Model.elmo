@@ -18,15 +18,17 @@ Elm.Model.make = function (_elm) {
                       ,hoveredEthos: $Maybe.Nothing
                       ,selectedGovernment: $Maybe.Nothing
                       ,hoveredGovernment: $Maybe.Nothing
+                      ,hoveredGovernmentForm: $Maybe.Nothing
                       ,selectedTraits: _U.list([])
                       ,hoveredTrait: $Maybe.Nothing};
-   var Model = F6(function (a,b,c,d,e,f) {
+   var Model = F7(function (a,b,c,d,e,f,g) {
       return {selectedEthoses: a
              ,hoveredEthos: b
              ,selectedGovernment: c
              ,hoveredGovernment: d
-             ,selectedTraits: e
-             ,hoveredTrait: f};
+             ,hoveredGovernmentForm: e
+             ,selectedTraits: f
+             ,hoveredTrait: g};
    });
    return _elm.Model.values = {_op: _op
                               ,initialModel: initialModel

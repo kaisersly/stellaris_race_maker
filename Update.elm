@@ -3,7 +3,7 @@ module Update (Action(..), update) where
 
 import Model exposing (Model)
 import Ethos exposing (Ethos)
-import Government exposing (Government)
+import Government exposing (Government, GovernmentForm)
 import Trait exposing (Trait, Family(None))
 
 
@@ -39,6 +39,8 @@ type Action
   | DeselectGovernment
   | HoverGovernment Government
   | DehoverGovernment
+  | HoverGovernmentForm GovernmentForm
+  | DehoverGovernmentForm
   | SelectTrait Trait
   | DeselectTrait Trait
   | HoverTrait Trait
@@ -84,6 +86,10 @@ update action model =
       { model | hoveredGovernment = Just government }
     DehoverGovernment ->
       { model | hoveredGovernment = Nothing }
+    HoverGovernmentForm form' ->
+      { model | hoveredGovernmentForm = Just form' }
+    DehoverGovernmentForm ->
+      { model | hoveredGovernmentForm = Nothing }
     SelectTrait trait ->
       let
         newTraits =

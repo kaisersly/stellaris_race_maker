@@ -7,7 +7,8 @@ import Html.Attributes exposing (class, classList)
 
 import Effect exposing (Effect)
 import Effect.Summary.View
-import Government exposing (Government)
+import Government exposing (Government, GovernmentForm)
+import Government.Data
 
 
 stringListWithTitle : String -> List String -> Html
@@ -44,8 +45,15 @@ showOne hoveredGovernment selectedGovernment government =
     ]
 
 
-show : Maybe Government -> Maybe Government -> Html
-show hoveredGovernment selectedGovernment =
+showGovernmentForm : GovernmentForm -> Html
+showGovernmentForm form' =
+  div []
+    [ h4 [] [ text (Government.governmentFormToString form') ]
+    , p [] [ text (Government.Data.governmentForm form') ]
+    ]
+
+show : Maybe GovernmentForm -> Maybe Government -> Maybe Government -> Html
+show hoveredGovernmentForm hoveredGovernment selectedGovernment =
   let
     governments =
       case (hoveredGovernment, selectedGovernment) of
@@ -61,6 +69,12 @@ show hoveredGovernment selectedGovernment =
           else
             [h, s]
   in
-    div
-      [ class "selected-governments" ]
-      (List.map (showOne hoveredGovernment selectedGovernment) governments)
+    case hoveredGovernmentForm of
+      Nothing ->
+        div
+          [ class "selected-governments" ]
+          (List.map (showOne hoveredGovernment selectedGovernment) governments)
+      Just f ->
+        div
+          [ class "hovered-government-form"]
+          [ showGovernmentForm f ]

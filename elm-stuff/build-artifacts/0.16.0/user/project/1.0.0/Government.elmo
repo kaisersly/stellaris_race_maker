@@ -42,17 +42,33 @@ Elm.Government.make = function (_elm) {
       selectedEthoses);
       return isUnlockedByEthoses && $Basics.not(isLockedByEthoses);
    });
-   var Government = F6(function (a,b,c,d,e,f) {
+   var Government = F8(function (a,b,c,d,e,f,g,h) {
       return {name: a
-             ,description: b
-             ,rulerTitle: c
-             ,unlockedIf: d
-             ,lockedIf: e
-             ,effects: f};
+             ,imgUrl: b
+             ,form$: c
+             ,description: d
+             ,rulerTitle: e
+             ,unlockedIf: f
+             ,lockedIf: g
+             ,effects: h};
    });
+   var governmentFormToString = function (form$) {
+      var _p2 = form$;
+      switch (_p2.ctor)
+      {case "Autocracy": return "Autocracy";
+         case "Oligarchy": return "Oligarchy";
+         default: return "Democracy";}
+   };
+   var Democracy = {ctor: "Democracy"};
+   var Oligarchy = {ctor: "Oligarchy"};
+   var Autocracy = {ctor: "Autocracy"};
    return _elm.Government.values = {_op: _op
+                                   ,governmentFormToString: governmentFormToString
                                    ,isAvailable: isAvailable
                                    ,isHovered: isHovered
                                    ,isSelected: isSelected
-                                   ,Government: Government};
+                                   ,Government: Government
+                                   ,Autocracy: Autocracy
+                                   ,Oligarchy: Oligarchy
+                                   ,Democracy: Democracy};
 };

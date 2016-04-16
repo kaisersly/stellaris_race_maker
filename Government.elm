@@ -1,12 +1,28 @@
-module Government (Government, isAvailable, isHovered, isSelected) where
+module Government (Government, GovernmentForm(..), governmentFormToString, isAvailable, isHovered, isSelected) where
 
 
 import Effect exposing (Effect)
 import Ethos exposing (Ethos)
 
 
+type GovernmentForm
+  = Autocracy
+  | Oligarchy
+  | Democracy
+
+
+governmentFormToString : GovernmentForm -> String
+governmentFormToString form' =
+  case form' of
+    Autocracy -> "Autocracy"
+    Oligarchy -> "Oligarchy"
+    Democracy -> "Democracy"
+
+
 type alias Government =
   { name : String
+  , imgUrl : String
+  , form' : GovernmentForm
   , description : String
   , rulerTitle : String
   , unlockedIf : List String

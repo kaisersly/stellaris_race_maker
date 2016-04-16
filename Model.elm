@@ -2,7 +2,7 @@ module Model (Model, initialModel) where
 
 
 import Ethos exposing (Ethos)
-import Government exposing (Government)
+import Government exposing (Government, GovernmentForm)
 import Trait exposing (Trait)
 
 
@@ -11,6 +11,7 @@ type alias Model =
   , hoveredEthos : Maybe Ethos
   , selectedGovernment : Maybe Government
   , hoveredGovernment : Maybe Government
+  , hoveredGovernmentForm : Maybe GovernmentForm
   , selectedTraits : List Trait
   , hoveredTrait : Maybe Trait
   }
@@ -22,6 +23,7 @@ initialModel =
   , hoveredEthos = Nothing
   , selectedGovernment = Nothing
   , hoveredGovernment = Nothing
+  , hoveredGovernmentForm = Nothing
   , selectedTraits = []
   , hoveredTrait = Nothing
   }

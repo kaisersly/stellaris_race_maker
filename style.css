@@ -19,9 +19,26 @@
   color: blue;
   font-weight: bold;
 }
+.government-form {
+  text-align: center;
+  cursor: help;
+}
+.all-governments ul {
+  padding: 0;
+}
 .all-governments .government {
-  /*color: red;*/
-  /*color: green;*/
+  height: 90px;
+  font-size: 13px;
+  text-align: center;
+}
+.all-governments .government img {
+  /*margin-left: 25%;*/
+  height: 50px;
+  border: 2px dashed rgba(0, 0, 0, 0);
+}
+.all-governments .government.selected img {
+  border-radius: 100%;
+  border-color: blue;
 }
 .all-governments .government.unavailable {
   color: lightgrey;
@@ -33,7 +50,7 @@
   cursor: pointer;
 }
 
-.selected-ethoses, .selected-governments {
+.selected-ethoses, .selected-governments, .hovered-government-form {
   font-size: 0.95em;
   height: 430px;
   overflow: scroll;

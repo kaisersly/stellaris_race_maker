@@ -25,6 +25,10 @@ Elm.Update.make = function (_elm) {
    var SelectTrait = function (a) {
       return {ctor: "SelectTrait",_0: a};
    };
+   var DehoverGovernmentForm = {ctor: "DehoverGovernmentForm"};
+   var HoverGovernmentForm = function (a) {
+      return {ctor: "HoverGovernmentForm",_0: a};
+   };
    var DehoverGovernment = {ctor: "DehoverGovernment"};
    var HoverGovernment = function (a) {
       return {ctor: "HoverGovernment",_0: a};
@@ -97,6 +101,10 @@ Elm.Update.make = function (_elm) {
            {hoveredGovernment: $Maybe.Just(_p1._0)});
          case "DehoverGovernment": return _U.update(model,
            {hoveredGovernment: $Maybe.Nothing});
+         case "HoverGovernmentForm": return _U.update(model,
+           {hoveredGovernmentForm: $Maybe.Just(_p1._0)});
+         case "DehoverGovernmentForm": return _U.update(model,
+           {hoveredGovernmentForm: $Maybe.Nothing});
          case "SelectTrait": var _p3 = _p1._0;
            var newTraits = _U.eq(_p3.family,
            $Trait.None) ? A2($Basics._op["++"],
@@ -133,6 +141,8 @@ Elm.Update.make = function (_elm) {
                                ,DeselectGovernment: DeselectGovernment
                                ,HoverGovernment: HoverGovernment
                                ,DehoverGovernment: DehoverGovernment
+                               ,HoverGovernmentForm: HoverGovernmentForm
+                               ,DehoverGovernmentForm: DehoverGovernmentForm
                                ,SelectTrait: SelectTrait
                                ,DeselectTrait: DeselectTrait
                                ,HoverTrait: HoverTrait
