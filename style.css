@@ -28,12 +28,17 @@
 }
 
 
-.selected-ethoses, .selected-governments, .selected-traits {
+.selected-ethoses, .selected-governments {
   font-size: 0.95em;
   height: 430px;
   overflow: scroll;
   padding-top: 40px;
 }
+
+ .selected-traits {
+   font-size: 0.95em;
+   padding-top: 40px;   
+ }
 
 .hovered {
   font-style: italic;
