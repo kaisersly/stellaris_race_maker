@@ -11646,7 +11646,7 @@ Elm.Effect.Factory.make = function (_elm) {
       return {name: "Engineering output"
              ,amount: amount
              ,suffix: "%"
-             ,moreIsBetter: false};
+             ,moreIsBetter: true};
    };
    var energyCredits = function (amount) {
       return {name: "Energy credits"

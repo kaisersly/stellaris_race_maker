@@ -99,7 +99,7 @@ engineeringOutput amount =
   { name = "Engineering output"
   , amount = amount
   , suffix = "%"
-  , moreIsBetter = False
+  , moreIsBetter = True
   }
 
 
