@@ -38,7 +38,7 @@ all =
     , description = "Members of this species are highly communal and quite used to living in close proximity to others."
     , points = 1
     , effects =
-        [ happiness 1
+        [ happiness 5
         ]
     }
   , { family = None
