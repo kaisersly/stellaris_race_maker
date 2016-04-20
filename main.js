@@ -11360,49 +11360,6 @@ Elm.Html.Events.make = function (_elm) {
                                     ,keyCode: keyCode
                                     ,Options: Options};
 };
-Elm.StartApp = Elm.StartApp || {};
-Elm.StartApp.Simple = Elm.StartApp.Simple || {};
-Elm.StartApp.Simple.make = function (_elm) {
-   "use strict";
-   _elm.StartApp = _elm.StartApp || {};
-   _elm.StartApp.Simple = _elm.StartApp.Simple || {};
-   if (_elm.StartApp.Simple.values)
-   return _elm.StartApp.Simple.values;
-   var _U = Elm.Native.Utils.make(_elm),
-   $Basics = Elm.Basics.make(_elm),
-   $Debug = Elm.Debug.make(_elm),
-   $Html = Elm.Html.make(_elm),
-   $List = Elm.List.make(_elm),
-   $Maybe = Elm.Maybe.make(_elm),
-   $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var _op = {};
-   var start = function (config) {
-      var update = F2(function (maybeAction,model) {
-         var _p0 = maybeAction;
-         if (_p0.ctor === "Just") {
-               return A2(config.update,_p0._0,model);
-            } else {
-               return _U.crashCase("StartApp.Simple",
-               {start: {line: 91,column: 7},end: {line: 96,column: 52}},
-               _p0)("This should never happen.");
-            }
-      });
-      var actions = $Signal.mailbox($Maybe.Nothing);
-      var address = A2($Signal.forwardTo,actions.address,$Maybe.Just);
-      var model = A3($Signal.foldp,
-      update,
-      config.model,
-      actions.signal);
-      return A2($Signal.map,config.view(address),model);
-   };
-   var Config = F3(function (a,b,c) {
-      return {model: a,view: b,update: c};
-   });
-   return _elm.StartApp.Simple.values = {_op: _op
-                                        ,Config: Config
-                                        ,start: start};
-};
 Elm.Effect = Elm.Effect || {};
 Elm.Effect.make = function (_elm) {
    "use strict";
@@ -12063,6 +12020,22 @@ Elm.Trait.make = function (_elm) {
                               ,VeryStrongWeak: VeryStrongWeak
                               ,None: None};
 };
+Elm.Version = Elm.Version || {};
+Elm.Version.make = function (_elm) {
+   "use strict";
+   _elm.Version = _elm.Version || {};
+   if (_elm.Version.values) return _elm.Version.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var get = 1;
+   return _elm.Version.values = {_op: _op,get: get};
+};
 Elm.Model = Elm.Model || {};
 Elm.Model.make = function (_elm) {
    "use strict";
@@ -12077,23 +12050,28 @@ Elm.Model.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
-   $Trait = Elm.Trait.make(_elm);
+   $Trait = Elm.Trait.make(_elm),
+   $Version = Elm.Version.make(_elm);
    var _op = {};
-   var initialModel = {selectedEthoses: _U.list([])
+   var initialModel = {version: $Version.get
+                      ,warning: $Maybe.Nothing
+                      ,selectedEthoses: _U.list([])
                       ,hoveredEthos: $Maybe.Nothing
                       ,selectedGovernment: $Maybe.Nothing
                       ,hoveredGovernment: $Maybe.Nothing
                       ,hoveredGovernmentForm: $Maybe.Nothing
                       ,selectedTraits: _U.list([])
                       ,hoveredTrait: $Maybe.Nothing};
-   var Model = F7(function (a,b,c,d,e,f,g) {
-      return {selectedEthoses: a
-             ,hoveredEthos: b
-             ,selectedGovernment: c
-             ,hoveredGovernment: d
-             ,hoveredGovernmentForm: e
-             ,selectedTraits: f
-             ,hoveredTrait: g};
+   var Model = F9(function (a,b,c,d,e,f,g,h,i) {
+      return {version: a
+             ,warning: b
+             ,selectedEthoses: c
+             ,hoveredEthos: d
+             ,selectedGovernment: e
+             ,hoveredGovernment: f
+             ,hoveredGovernmentForm: g
+             ,selectedTraits: h
+             ,hoveredTrait: i};
    });
    return _elm.Model.values = {_op: _op
                               ,initialModel: initialModel
@@ -12252,6 +12230,7 @@ Elm.Update.make = function (_elm) {
    var SelectEthos = function (a) {
       return {ctor: "SelectEthos",_0: a};
    };
+   var Init = function (a) {    return {ctor: "Init",_0: a};};
    var NoOp = {ctor: "NoOp"};
    var traitsAreValid = function (traits) {
       return _U.cmp($Trait.remainingPoints(traits),
@@ -12275,6 +12254,7 @@ Elm.Update.make = function (_elm) {
       var _p1 = action;
       switch (_p1.ctor)
       {case "NoOp": return model;
+         case "Init": return _p1._0;
          case "SelectEthos": var _p2 = _p1._0;
            var newEthoses = A2($List.append,
            _U.list([_p2]),
@@ -12338,6 +12318,7 @@ Elm.Update.make = function (_elm) {
    return _elm.Update.values = {_op: _op
                                ,update: update
                                ,NoOp: NoOp
+                               ,Init: Init
                                ,SelectEthos: SelectEthos
                                ,DeselectEthos: DeselectEthos
                                ,HoverEthos: HoverEthos
@@ -12792,6 +12773,248 @@ Elm.Government.Data.make = function (_elm) {
                                         ,all: all
                                         ,governmentForm: governmentForm};
 };
+Elm.Trait = Elm.Trait || {};
+Elm.Trait.Data = Elm.Trait.Data || {};
+Elm.Trait.Data.make = function (_elm) {
+   "use strict";
+   _elm.Trait = _elm.Trait || {};
+   _elm.Trait.Data = _elm.Trait.Data || {};
+   if (_elm.Trait.Data.values) return _elm.Trait.Data.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effect$Factory = Elm.Effect.Factory.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Trait = Elm.Trait.make(_elm);
+   var _op = {};
+   var all = _U.list([{family: $Trait.ExtremelyNonAdaptive
+                      ,name: "Adaptive"
+                      ,description: "This species is highly adaptive when it comes to foreign environments."
+                      ,points: 2
+                      ,effects: _U.list([$Effect$Factory.habitability(10)])}
+                     ,{family: $Trait.None
+                      ,name: "Agrarian"
+                      ,description: "This species has a deep connection to the land and make expert farmers and gardeners."
+                      ,points: 2
+                      ,effects: _U.list([$Effect$Factory.foodOutput(1)])}
+                     ,{family: $Trait.CharismaticRepugnant
+                      ,name: "Charismatic"
+                      ,description: "Members of this species have a special charisma and are generally considered pleasant to be around."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.otherSpeciesHappinessPerPop(1)])}
+                     ,{family: $Trait.CommunalSolitary
+                      ,name: "Communal"
+                      ,description: "Members of this species are highly communal and quite used to living in close proximity to others."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.happiness(5)])}
+                     ,{family: $Trait.None
+                      ,name: "Conformists"
+                      ,description: "These people always seek consensus and are more likely to conform to the governing ethics."
+                      ,points: 2
+                      ,effects: _U.list([$Effect$Factory.ethicsDivergence(-20)])}
+                     ,{family: $Trait.EnduringVenerable
+                      ,name: "Enduring"
+                      ,description: "Lifespans in this species are unusually long."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.leaderLifespan(30)])}
+                     ,{family: $Trait.ExtremelyNonAdaptive
+                      ,name: "Extremely Adaptive"
+                      ,description: "This species is remarkably adept at adopting to any foreign environments."
+                      ,points: 5
+                      ,effects: _U.list([$Effect$Factory.habitability(20)])}
+                     ,{family: $Trait.None
+                      ,name: "Industrious"
+                      ,description: "Members of this species are known for their diligence and hard-working nature, always going above and beyond."
+                      ,points: 2
+                      ,effects: _U.list([$Effect$Factory.minerals(15)])}
+                     ,{family: $Trait.None
+                      ,name: "Intelligent"
+                      ,description: "This species is highly intelligent and enjoys faster technological progress."
+                      ,points: 2
+                      ,effects: _U.list([$Effect$Factory.engineeringOutput(10)
+                                        ,$Effect$Factory.physicsOutput(10)
+                                        ,$Effect$Factory.societyOutput(10)])}
+                     ,{family: $Trait.NaturalEngineersPhysicistsSociologists
+                      ,name: "Natural Engineers"
+                      ,description: "Members of this species have a natural inclination towards engineering and the material sciences."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.engineeringOutput(15)])}
+                     ,{family: $Trait.NaturalEngineersPhysicistsSociologists
+                      ,name: "Natural Physicists"
+                      ,description: "Members of this species have a natural inclination towards theoretical physics and astral phenomena."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.physicsOutput(15)])}
+                     ,{family: $Trait.NaturalEngineersPhysicistsSociologists
+                      ,name: "Natural Sociologists"
+                      ,description: "Members of this species have a natural inclination towards sociology and biological studies."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.societyOutput(15)])}
+                     ,{family: $Trait.NomadicSedentary
+                      ,name: "Nomadic"
+                      ,description: "This species has a nomadic past, and its members often think nothing when relocation to another world."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.migrationTime(-50)])}
+                     ,{family: $Trait.QuickSlowLearners
+                      ,name: "Quick Learners"
+                      ,description: "Members of this species are quick to learn from experiences."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.leaderExperienceGain(25)])}
+                     ,{family: $Trait.RapidSlowBreeders
+                      ,name: "Rapid Breeders"
+                      ,description: "This species reproduces at a very rapid rate, increasing population growth."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.growthTime(-10)])}
+                     ,{family: $Trait.None
+                      ,name: "Resilient"
+                      ,description: "Members of this species are physiologically resilient and will fight like enraged brood mothers to defend their worlds."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.militiaHealth(100)
+                                        ,$Effect$Factory.bombardmentResistance(200)])}
+                     ,{family: $Trait.VeryStrongWeak
+                      ,name: "Strong"
+                      ,description: "Members of this species possess great physical strength, making them formidable fighters on the ground."
+                      ,points: 1
+                      ,effects: _U.list([$Effect$Factory.armyDamage(20)
+                                        ,$Effect$Factory.minerals(5)])}
+                     ,{family: $Trait.None
+                      ,name: "Talented"
+                      ,description: "Members of this species are born with a natural aptitude."
+                      ,points: 2
+                      ,effects: _U.list([$Effect$Factory.leaderSkillLevels(1)])}
+                     ,{family: $Trait.None
+                      ,name: "Thrifty"
+                      ,description: "Members of this species are instinctively economical and are always looking to make a good profit, whatever corners need cutting."
+                      ,points: 2
+                      ,effects: _U.list([$Effect$Factory.energyCredits(15)])}
+                     ,{family: $Trait.EnduringVenerable
+                      ,name: "Venerable"
+                      ,description: "This species can grow to an age that commands dignity and respect."
+                      ,points: 4
+                      ,effects: _U.list([$Effect$Factory.leaderLifespan(120)])}
+                     ,{family: $Trait.VeryStrongWeak
+                      ,name: "Very Strong"
+                      ,description: "Members of this species possess a strength that almost defies the laws of physics."
+                      ,points: 4
+                      ,effects: _U.list([$Effect$Factory.armyDamage(40)
+                                        ,$Effect$Factory.minerals(10)])}
+                     ,{family: $Trait.None
+                      ,name: "Decadent"
+                      ,description: "This species requires slaves or servants to feel content."
+                      ,points: -1
+                      ,effects: _U.list([$Effect$Factory.resourceOutputWithoutSlaves(-10)])}
+                     ,{family: $Trait.ExtremelyNonAdaptive
+                      ,name: "Nonadaptive"
+                      ,description: "This species does not adapt well to foreign environments."
+                      ,points: -1
+                      ,effects: _U.list([$Effect$Factory.habitability(-10)])}
+                     ,{family: $Trait.CharismaticRepugnant
+                      ,name: "Repugnant"
+                      ,description: "The physical appearance and customs of this species are considered offensive to most others and few appreciate them as neighbors."
+                      ,points: -1
+                      ,effects: _U.list([$Effect$Factory.otherSpeciesHappinessPerPop(-1)])}
+                     ,{family: $Trait.NomadicSedentary
+                      ,name: "Sedentary"
+                      ,description: "This species has a sedentary past, and its members are reluctant to migrate away from where they grew up."
+                      ,points: -1
+                      ,effects: _U.list([$Effect$Factory.migrationTime(50)])}
+                     ,{family: $Trait.RapidSlowBreeders
+                      ,name: "Slow Breeders"
+                      ,description: "This species reproduces at a slow rate, lowering population growth."
+                      ,points: -1
+                      ,effects: _U.list([$Effect$Factory.growthTime(15)])}
+                     ,{family: $Trait.QuickSlowLearners
+                      ,name: "Slow Learners"
+                      ,description: "Members of this species are slow to learn from their experiences."
+                      ,points: -1
+                      ,effects: _U.list([$Effect$Factory.leaderExperienceGain(-25)])}
+                     ,{family: $Trait.CommunalSolitary
+                      ,name: "Solitary"
+                      ,description: "Members of this species tend to be solitary and territorial, often becoming agitated in crowded conditions."
+                      ,points: -1
+                      ,effects: _U.list([$Effect$Factory.happiness(-5)])}
+                     ,{family: $Trait.VeryStrongWeak
+                      ,name: "Weak"
+                      ,description: "Members of this species are physically weaker than average, making them poor fighters on the ground."
+                      ,points: -1
+                      ,effects: _U.list([$Effect$Factory.armyDamage(-20)])}]);
+   return _elm.Trait.Data.values = {_op: _op,all: all};
+};
+Elm.Export = Elm.Export || {};
+Elm.Export.make = function (_elm) {
+   "use strict";
+   _elm.Export = _elm.Export || {};
+   if (_elm.Export.values) return _elm.Export.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Ethos$Data = Elm.Ethos.Data.make(_elm),
+   $Government$Data = Elm.Government.Data.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Model = Elm.Model.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Trait$Data = Elm.Trait.Data.make(_elm);
+   var _op = {};
+   var indexInList = F2(function (list,a) {
+      return $List.head(A2($List.map,
+      function (_p0) {
+         var _p1 = _p0;
+         return _p1._0;
+      },
+      A2($List.filter,
+      function (_p2) {
+         var _p3 = _p2;
+         return _U.eq(_p3._1,a);
+      },
+      A2($List.indexedMap,
+      F2(function (v0,v1) {
+         return {ctor: "_Tuple2",_0: v0,_1: v1};
+      }),
+      list))));
+   });
+   var asIndices = function (model) {
+      var traits = $List.sort(A2($List.map,
+      $Maybe.withDefault(0),
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x,$Maybe.Nothing);
+      },
+      A2($List.map,
+      indexInList($Trait$Data.all),
+      model.selectedTraits))));
+      var government = function () {
+         var _p4 = model.selectedGovernment;
+         if (_p4.ctor === "Nothing") {
+               return $Maybe.Nothing;
+            } else {
+               return A2(indexInList,$Government$Data.all,_p4._0);
+            }
+      }();
+      var ethoses = $List.sort(A2($List.map,
+      $Maybe.withDefault(0),
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x,$Maybe.Nothing);
+      },
+      A2($List.map,
+      indexInList($Ethos$Data.all),
+      model.selectedEthoses))));
+      return {version: model.version
+             ,ethoses: ethoses
+             ,government: government
+             ,traits: traits};
+   };
+   var IndicesModel = F4(function (a,b,c,d) {
+      return {version: a,ethoses: b,government: c,traits: d};
+   });
+   return _elm.Export.values = {_op: _op
+                               ,asIndices: asIndices
+                               ,IndicesModel: IndicesModel};
+};
 Elm.Government = Elm.Government || {};
 Elm.Government.AllList = Elm.Government.AllList || {};
 Elm.Government.AllList.make = function (_elm) {
@@ -13021,174 +13244,92 @@ Elm.Government.SelectedList.make = function (_elm) {
    return _elm.Government.SelectedList.values = {_op: _op
                                                 ,show: show};
 };
-Elm.Trait = Elm.Trait || {};
-Elm.Trait.Data = Elm.Trait.Data || {};
-Elm.Trait.Data.make = function (_elm) {
+Elm.Import = Elm.Import || {};
+Elm.Import.make = function (_elm) {
    "use strict";
-   _elm.Trait = _elm.Trait || {};
-   _elm.Trait.Data = _elm.Trait.Data || {};
-   if (_elm.Trait.Data.values) return _elm.Trait.Data.values;
+   _elm.Import = _elm.Import || {};
+   if (_elm.Import.values) return _elm.Import.values;
    var _U = Elm.Native.Utils.make(_elm),
+   $Array = Elm.Array.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
-   $Effect$Factory = Elm.Effect.Factory.make(_elm),
+   $Ethos = Elm.Ethos.make(_elm),
+   $Ethos$Data = Elm.Ethos.Data.make(_elm),
+   $Export = Elm.Export.make(_elm),
+   $Government = Elm.Government.make(_elm),
+   $Government$Data = Elm.Government.Data.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
+   $Model = Elm.Model.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
-   $Trait = Elm.Trait.make(_elm);
+   $Trait = Elm.Trait.make(_elm),
+   $Trait$Data = Elm.Trait.Data.make(_elm),
+   $Update = Elm.Update.make(_elm);
    var _op = {};
-   var all = _U.list([{family: $Trait.ExtremelyNonAdaptive
-                      ,name: "Adaptive"
-                      ,description: "This species is highly adaptive when it comes to foreign environments."
-                      ,points: 2
-                      ,effects: _U.list([$Effect$Factory.habitability(10)])}
-                     ,{family: $Trait.None
-                      ,name: "Agrarian"
-                      ,description: "This species has a deep connection to the land and make expert farmers and gardeners."
-                      ,points: 2
-                      ,effects: _U.list([$Effect$Factory.foodOutput(1)])}
-                     ,{family: $Trait.CharismaticRepugnant
-                      ,name: "Charismatic"
-                      ,description: "Members of this species have a special charisma and are generally considered pleasant to be around."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.otherSpeciesHappinessPerPop(1)])}
-                     ,{family: $Trait.CommunalSolitary
-                      ,name: "Communal"
-                      ,description: "Members of this species are highly communal and quite used to living in close proximity to others."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.happiness(5)])}
-                     ,{family: $Trait.None
-                      ,name: "Conformists"
-                      ,description: "These people always seek consensus and are more likely to conform to the governing ethics."
-                      ,points: 2
-                      ,effects: _U.list([$Effect$Factory.ethicsDivergence(-20)])}
-                     ,{family: $Trait.EnduringVenerable
-                      ,name: "Enduring"
-                      ,description: "Lifespans in this species are unusually long."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.leaderLifespan(30)])}
-                     ,{family: $Trait.ExtremelyNonAdaptive
-                      ,name: "Extremely Adaptive"
-                      ,description: "This species is remarkably adept at adopting to any foreign environments."
-                      ,points: 5
-                      ,effects: _U.list([$Effect$Factory.habitability(20)])}
-                     ,{family: $Trait.None
-                      ,name: "Industrious"
-                      ,description: "Members of this species are known for their diligence and hard-working nature, always going above and beyond."
-                      ,points: 2
-                      ,effects: _U.list([$Effect$Factory.minerals(15)])}
-                     ,{family: $Trait.None
-                      ,name: "Intelligent"
-                      ,description: "This species is highly intelligent and enjoys faster technological progress."
-                      ,points: 2
-                      ,effects: _U.list([$Effect$Factory.engineeringOutput(10)
-                                        ,$Effect$Factory.physicsOutput(10)
-                                        ,$Effect$Factory.societyOutput(10)])}
-                     ,{family: $Trait.NaturalEngineersPhysicistsSociologists
-                      ,name: "Natural Engineers"
-                      ,description: "Members of this species have a natural inclination towards engineering and the material sciences."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.engineeringOutput(15)])}
-                     ,{family: $Trait.NaturalEngineersPhysicistsSociologists
-                      ,name: "Natural Physicists"
-                      ,description: "Members of this species have a natural inclination towards theoretical physics and astral phenomena."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.physicsOutput(15)])}
-                     ,{family: $Trait.NaturalEngineersPhysicistsSociologists
-                      ,name: "Natural Sociologists"
-                      ,description: "Members of this species have a natural inclination towards sociology and biological studies."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.societyOutput(15)])}
-                     ,{family: $Trait.NomadicSedentary
-                      ,name: "Nomadic"
-                      ,description: "This species has a nomadic past, and its members often think nothing when relocation to another world."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.migrationTime(-50)])}
-                     ,{family: $Trait.QuickSlowLearners
-                      ,name: "Quick Learners"
-                      ,description: "Members of this species are quick to learn from experiences."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.leaderExperienceGain(25)])}
-                     ,{family: $Trait.RapidSlowBreeders
-                      ,name: "Rapid Breeders"
-                      ,description: "This species reproduces at a very rapid rate, increasing population growth."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.growthTime(-10)])}
-                     ,{family: $Trait.None
-                      ,name: "Resilient"
-                      ,description: "Members of this species are physiologically resilient and will fight like enraged brood mothers to defend their worlds."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.militiaHealth(100)
-                                        ,$Effect$Factory.bombardmentResistance(200)])}
-                     ,{family: $Trait.VeryStrongWeak
-                      ,name: "Strong"
-                      ,description: "Members of this species possess great physical strength, making them formidable fighters on the ground."
-                      ,points: 1
-                      ,effects: _U.list([$Effect$Factory.armyDamage(20)
-                                        ,$Effect$Factory.minerals(5)])}
-                     ,{family: $Trait.None
-                      ,name: "Talented"
-                      ,description: "Members of this species are born with a natural aptitude."
-                      ,points: 2
-                      ,effects: _U.list([$Effect$Factory.leaderSkillLevels(1)])}
-                     ,{family: $Trait.None
-                      ,name: "Thrifty"
-                      ,description: "Members of this species are instinctively economical and are always looking to make a good profit, whatever corners need cutting."
-                      ,points: 2
-                      ,effects: _U.list([$Effect$Factory.energyCredits(15)])}
-                     ,{family: $Trait.EnduringVenerable
-                      ,name: "Venerable"
-                      ,description: "This species can grow to an age that commands dignity and respect."
-                      ,points: 4
-                      ,effects: _U.list([$Effect$Factory.leaderLifespan(120)])}
-                     ,{family: $Trait.VeryStrongWeak
-                      ,name: "Very Strong"
-                      ,description: "Members of this species possess a strength that almost defies the laws of physics."
-                      ,points: 4
-                      ,effects: _U.list([$Effect$Factory.armyDamage(40)
-                                        ,$Effect$Factory.minerals(10)])}
-                     ,{family: $Trait.None
-                      ,name: "Decadent"
-                      ,description: "This species requires slaves or servants to feel content."
-                      ,points: -1
-                      ,effects: _U.list([$Effect$Factory.resourceOutputWithoutSlaves(-10)])}
-                     ,{family: $Trait.ExtremelyNonAdaptive
-                      ,name: "Nonadaptive"
-                      ,description: "This species does not adapt well to foreign environments."
-                      ,points: -1
-                      ,effects: _U.list([$Effect$Factory.habitability(-10)])}
-                     ,{family: $Trait.CharismaticRepugnant
-                      ,name: "Repugnant"
-                      ,description: "The physical appearance and customs of this species are considered offensive to most others and few appreciate them as neighbors."
-                      ,points: -1
-                      ,effects: _U.list([$Effect$Factory.otherSpeciesHappinessPerPop(-1)])}
-                     ,{family: $Trait.NomadicSedentary
-                      ,name: "Sedentary"
-                      ,description: "This species has a sedentary past, and its members are reluctant to migrate away from where they grew up."
-                      ,points: -1
-                      ,effects: _U.list([$Effect$Factory.migrationTime(50)])}
-                     ,{family: $Trait.RapidSlowBreeders
-                      ,name: "Slow Breeders"
-                      ,description: "This species reproduces at a slow rate, lowering population growth."
-                      ,points: -1
-                      ,effects: _U.list([$Effect$Factory.growthTime(15)])}
-                     ,{family: $Trait.QuickSlowLearners
-                      ,name: "Slow Learners"
-                      ,description: "Members of this species are slow to learn from their experiences."
-                      ,points: -1
-                      ,effects: _U.list([$Effect$Factory.leaderExperienceGain(-25)])}
-                     ,{family: $Trait.CommunalSolitary
-                      ,name: "Solitary"
-                      ,description: "Members of this species tend to be solitary and territorial, often becoming agitated in crowded conditions."
-                      ,points: -1
-                      ,effects: _U.list([$Effect$Factory.happiness(-5)])}
-                     ,{family: $Trait.VeryStrongWeak
-                      ,name: "Weak"
-                      ,description: "Members of this species are physically weaker than average, making them poor fighters on the ground."
-                      ,points: -1
-                      ,effects: _U.list([$Effect$Factory.armyDamage(-20)])}]);
-   return _elm.Trait.Data.values = {_op: _op,all: all};
+   var checkVersion = F2(function (version,model) {
+      return _U.eq(model.version,
+      version) ? model : _U.update(model,
+      {warning: $Maybe.Just("The version of this race does not match the current version of this app")});
+   });
+   var setTraits = F2(function (traits,model) {
+      var actions = A2($List.map,$Update.SelectTrait,traits);
+      return A3($List.foldl,$Update.update,model,actions);
+   });
+   var setGovernment = F2(function (maybeGovernment,model) {
+      var _p0 = maybeGovernment;
+      if (_p0.ctor === "Nothing") {
+            return model;
+         } else {
+            return A2($Update.update,
+            $Update.SelectGovernment(_p0._0),
+            model);
+         }
+   });
+   var setEthoses = F2(function (ethoses,model) {
+      var actions = A2($List.map,$Update.SelectEthos,ethoses);
+      return A3($List.foldl,$Update.update,model,actions);
+   });
+   var filterNothings = function (list) {
+      return A3($List.foldl,
+      F2(function (current,acc) {
+         var _p1 = current;
+         if (_p1.ctor === "Nothing") {
+               return acc;
+            } else {
+               return A2($List._op["::"],_p1._0,acc);
+            }
+      }),
+      _U.list([]),
+      list);
+   };
+   var fromIndices = function (indicesModel) {
+      var traitsArray = $Array.fromList($Trait$Data.all);
+      var traits = filterNothings(A2($List.map,
+      A2($Basics.flip,$Array.get,traitsArray),
+      indicesModel.traits));
+      var governmentsArray = $Array.fromList($Government$Data.all);
+      var government = function () {
+         var _p2 = indicesModel.government;
+         if (_p2.ctor === "Nothing") {
+               return $Maybe.Nothing;
+            } else {
+               return A2($Array.get,_p2._0,governmentsArray);
+            }
+      }();
+      var ethosesArray = $Array.fromList($Ethos$Data.all);
+      var ethoses = filterNothings(A2($List.map,
+      A2($Basics.flip,$Array.get,ethosesArray),
+      indicesModel.ethoses));
+      return A2(checkVersion,
+      indicesModel.version,
+      A2(setTraits,
+      traits,
+      A2(setGovernment,
+      government,
+      A2(setEthoses,ethoses,$Model.initialModel))));
+   };
+   return _elm.Import.values = {_op: _op,fromIndices: fromIndices};
 };
 Elm.Trait = Elm.Trait || {};
 Elm.Trait.AllList = Elm.Trait.AllList || {};
@@ -13400,10 +13541,21 @@ Elm.View.make = function (_elm) {
    $Update = Elm.Update.make(_elm);
    var _op = {};
    var show = F2(function (address,model) {
+      var warning = function () {
+         var _p0 = model.warning;
+         if (_p0.ctor === "Nothing") {
+               return $Html.text("");
+            } else {
+               return A2($Html.div,
+               _U.list([$Html$Attributes.$class("alert alert-warning")]),
+               _U.list([$Html.text(_p0._0)]));
+            }
+      }();
       var effects = $Effect$Summary.extractEffects(model);
       return A2($Html.div,
       _U.list([$Html$Attributes.$class("container-fluid")]),
-      _U.list([A2($Html.div,
+      _U.list([warning
+              ,A2($Html.div,
               _U.list([$Html$Attributes.$class("row")]),
               _U.list([A2($Html.div,
                       _U.list([$Html$Attributes.$class("col-sm-5")]),
@@ -13461,17 +13613,63 @@ Elm.Main.make = function (_elm) {
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
+   $Export = Elm.Export.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Import = Elm.Import.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Model = Elm.Model.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
-   $StartApp$Simple = Elm.StartApp.Simple.make(_elm),
    $Update = Elm.Update.make(_elm),
    $View = Elm.View.make(_elm);
    var _op = {};
-   var main = $StartApp$Simple.start({model: $Model.initialModel
-                                     ,update: $Update.update
-                                     ,view: $View.show});
-   return _elm.Main.values = {_op: _op,main: main};
+   var mb = $Signal.mailbox($Update.NoOp);
+   var setModelRequests = Elm.Native.Port.make(_elm).inboundSignal("setModelRequests",
+   "Export.IndicesModel",
+   function (v) {
+      return typeof v === "object" && "version" in v && "ethoses" in v && "government" in v && "traits" in v ? {_: {}
+                                                                                                               ,version: typeof v.version === "number" && isFinite(v.version) && Math.floor(v.version) === v.version ? v.version : _U.badPort("an integer",
+                                                                                                               v.version)
+                                                                                                               ,ethoses: typeof v.ethoses === "object" && v.ethoses instanceof Array ? Elm.Native.List.make(_elm).fromArray(v.ethoses.map(function (v) {
+                                                                                                                  return typeof v === "number" && isFinite(v) && Math.floor(v) === v ? v : _U.badPort("an integer",
+                                                                                                                  v);
+                                                                                                               })) : _U.badPort("an array",v.ethoses)
+                                                                                                               ,government: v.government === null ? Elm.Maybe.make(_elm).Nothing : Elm.Maybe.make(_elm).Just(typeof v.government === "number" && isFinite(v.government) && Math.floor(v.government) === v.government ? v.government : _U.badPort("an integer",
+                                                                                                               v.government))
+                                                                                                               ,traits: typeof v.traits === "object" && v.traits instanceof Array ? Elm.Native.List.make(_elm).fromArray(v.traits.map(function (v) {
+                                                                                                                  return typeof v === "number" && isFinite(v) && Math.floor(v) === v ? v : _U.badPort("an integer",
+                                                                                                                  v);
+                                                                                                               })) : _U.badPort("an array",
+                                                                                                               v.traits)} : _U.badPort("an object with fields `version`, `ethoses`, `government`, `traits`",
+      v);
+   });
+   var setModelAction = A2($Signal.map,
+   $Update.Init,
+   A2($Signal.map,$Import.fromIndices,setModelRequests));
+   var actionSignal = $Signal.mergeMany(_U.list([mb.signal
+                                                ,setModelAction]));
+   var modelSignal = A3($Signal.foldp,
+   $Update.update,
+   $Model.initialModel,
+   actionSignal);
+   var main = A2($Signal.map,$View.show(mb.address),modelSignal);
+   var model = Elm.Native.Port.make(_elm).outboundSignal("model",
+   function (v) {
+      return {version: v.version
+             ,ethoses: Elm.Native.List.make(_elm).toArray(v.ethoses).map(function (v) {
+                return v;
+             })
+             ,government: v.government.ctor === "Nothing" ? null : v.government._0
+             ,traits: Elm.Native.List.make(_elm).toArray(v.traits).map(function (v) {
+                return v;
+             })};
+   },
+   A2($Signal.map,$Export.asIndices,modelSignal));
+   return _elm.Main.values = {_op: _op
+                             ,setModelAction: setModelAction
+                             ,mb: mb
+                             ,actionSignal: actionSignal
+                             ,modelSignal: modelSignal
+                             ,main: main};
 };

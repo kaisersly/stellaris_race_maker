@@ -21,10 +21,19 @@ show : Signal.Address Action -> Model -> Html
 show address model =
   let
     effects = Effect.Summary.extractEffects model
+    warning =
+      case model.warning of
+        Nothing ->
+          text ""
+        Just str ->
+          div
+            [ class "alert alert-warning" ]
+            [ text str ]
   in
     div
       [ class "container-fluid" ]
-      [ div
+      [ warning
+      , div
           [ class "row" ]
           [ div
               [ class "col-sm-5" ]

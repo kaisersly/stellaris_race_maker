@@ -1,0 +1,73 @@
+Elm.Export = Elm.Export || {};
+Elm.Export.make = function (_elm) {
+   "use strict";
+   _elm.Export = _elm.Export || {};
+   if (_elm.Export.values) return _elm.Export.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Ethos$Data = Elm.Ethos.Data.make(_elm),
+   $Government$Data = Elm.Government.Data.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Model = Elm.Model.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Trait$Data = Elm.Trait.Data.make(_elm);
+   var _op = {};
+   var indexInList = F2(function (list,a) {
+      return $List.head(A2($List.map,
+      function (_p0) {
+         var _p1 = _p0;
+         return _p1._0;
+      },
+      A2($List.filter,
+      function (_p2) {
+         var _p3 = _p2;
+         return _U.eq(_p3._1,a);
+      },
+      A2($List.indexedMap,
+      F2(function (v0,v1) {
+         return {ctor: "_Tuple2",_0: v0,_1: v1};
+      }),
+      list))));
+   });
+   var asIndices = function (model) {
+      var traits = $List.sort(A2($List.map,
+      $Maybe.withDefault(0),
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x,$Maybe.Nothing);
+      },
+      A2($List.map,
+      indexInList($Trait$Data.all),
+      model.selectedTraits))));
+      var government = function () {
+         var _p4 = model.selectedGovernment;
+         if (_p4.ctor === "Nothing") {
+               return $Maybe.Nothing;
+            } else {
+               return A2(indexInList,$Government$Data.all,_p4._0);
+            }
+      }();
+      var ethoses = $List.sort(A2($List.map,
+      $Maybe.withDefault(0),
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x,$Maybe.Nothing);
+      },
+      A2($List.map,
+      indexInList($Ethos$Data.all),
+      model.selectedEthoses))));
+      return {version: model.version
+             ,ethoses: ethoses
+             ,government: government
+             ,traits: traits};
+   };
+   var IndicesModel = F4(function (a,b,c,d) {
+      return {version: a,ethoses: b,government: c,traits: d};
+   });
+   return _elm.Export.values = {_op: _op
+                               ,asIndices: asIndices
+                               ,IndicesModel: IndicesModel};
+};

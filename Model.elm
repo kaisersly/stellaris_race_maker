@@ -4,10 +4,13 @@ module Model (Model, initialModel) where
 import Ethos exposing (Ethos)
 import Government exposing (Government, GovernmentForm)
 import Trait exposing (Trait)
+import Version
 
 
 type alias Model =
-  { selectedEthoses : List Ethos
+  { version : Int
+  , warning : Maybe String
+  , selectedEthoses : List Ethos
   , hoveredEthos : Maybe Ethos
   , selectedGovernment : Maybe Government
   , hoveredGovernment : Maybe Government
@@ -19,7 +22,9 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-  { selectedEthoses = []
+  { version = Version.get
+  , warning = Nothing
+  , selectedEthoses = []
   , hoveredEthos = Nothing
   , selectedGovernment = Nothing
   , hoveredGovernment = Nothing

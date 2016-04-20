@@ -24,10 +24,21 @@ Elm.View.make = function (_elm) {
    $Update = Elm.Update.make(_elm);
    var _op = {};
    var show = F2(function (address,model) {
+      var warning = function () {
+         var _p0 = model.warning;
+         if (_p0.ctor === "Nothing") {
+               return $Html.text("");
+            } else {
+               return A2($Html.div,
+               _U.list([$Html$Attributes.$class("alert alert-warning")]),
+               _U.list([$Html.text(_p0._0)]));
+            }
+      }();
       var effects = $Effect$Summary.extractEffects(model);
       return A2($Html.div,
       _U.list([$Html$Attributes.$class("container-fluid")]),
-      _U.list([A2($Html.div,
+      _U.list([warning
+              ,A2($Html.div,
               _U.list([$Html$Attributes.$class("row")]),
               _U.list([A2($Html.div,
                       _U.list([$Html$Attributes.$class("col-sm-5")]),

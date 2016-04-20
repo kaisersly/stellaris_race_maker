@@ -1,0 +1,87 @@
+Elm.Import = Elm.Import || {};
+Elm.Import.make = function (_elm) {
+   "use strict";
+   _elm.Import = _elm.Import || {};
+   if (_elm.Import.values) return _elm.Import.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Array = Elm.Array.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Ethos = Elm.Ethos.make(_elm),
+   $Ethos$Data = Elm.Ethos.Data.make(_elm),
+   $Export = Elm.Export.make(_elm),
+   $Government = Elm.Government.make(_elm),
+   $Government$Data = Elm.Government.Data.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Model = Elm.Model.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Trait = Elm.Trait.make(_elm),
+   $Trait$Data = Elm.Trait.Data.make(_elm),
+   $Update = Elm.Update.make(_elm);
+   var _op = {};
+   var checkVersion = F2(function (version,model) {
+      return _U.eq(model.version,
+      version) ? model : _U.update(model,
+      {warning: $Maybe.Just("The version of this race does not match the current version of this app")});
+   });
+   var setTraits = F2(function (traits,model) {
+      var actions = A2($List.map,$Update.SelectTrait,traits);
+      return A3($List.foldl,$Update.update,model,actions);
+   });
+   var setGovernment = F2(function (maybeGovernment,model) {
+      var _p0 = maybeGovernment;
+      if (_p0.ctor === "Nothing") {
+            return model;
+         } else {
+            return A2($Update.update,
+            $Update.SelectGovernment(_p0._0),
+            model);
+         }
+   });
+   var setEthoses = F2(function (ethoses,model) {
+      var actions = A2($List.map,$Update.SelectEthos,ethoses);
+      return A3($List.foldl,$Update.update,model,actions);
+   });
+   var filterNothings = function (list) {
+      return A3($List.foldl,
+      F2(function (current,acc) {
+         var _p1 = current;
+         if (_p1.ctor === "Nothing") {
+               return acc;
+            } else {
+               return A2($List._op["::"],_p1._0,acc);
+            }
+      }),
+      _U.list([]),
+      list);
+   };
+   var fromIndices = function (indicesModel) {
+      var traitsArray = $Array.fromList($Trait$Data.all);
+      var traits = filterNothings(A2($List.map,
+      A2($Basics.flip,$Array.get,traitsArray),
+      indicesModel.traits));
+      var governmentsArray = $Array.fromList($Government$Data.all);
+      var government = function () {
+         var _p2 = indicesModel.government;
+         if (_p2.ctor === "Nothing") {
+               return $Maybe.Nothing;
+            } else {
+               return A2($Array.get,_p2._0,governmentsArray);
+            }
+      }();
+      var ethosesArray = $Array.fromList($Ethos$Data.all);
+      var ethoses = filterNothings(A2($List.map,
+      A2($Basics.flip,$Array.get,ethosesArray),
+      indicesModel.ethoses));
+      return A2(checkVersion,
+      indicesModel.version,
+      A2(setTraits,
+      traits,
+      A2(setGovernment,
+      government,
+      A2(setEthoses,ethoses,$Model.initialModel))));
+   };
+   return _elm.Import.values = {_op: _op,fromIndices: fromIndices};
+};

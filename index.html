@@ -10,6 +10,64 @@
 <body>
   <div id="app"></div>
   <script src="main.js"></script>
-  <script>Elm.embed(Elm.Main, document.getElementById("app"))</script>
+  <script>
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    function urlToModel (url) {
+      var versionStr = getParameterByName("version", url);
+      var version = Number(versionStr);
+      var ethosesStr = getParameterByName("ethoses", url);
+      var ethoses = ethosesStr === "" ? [] : ethosesStr.split(",").map(function(x) { return Number(x); });
+      var governmentStr = getParameterByName("government", url);
+      var government = (governmentStr === "null" || governmentStr === "") ? null : Number(governmentStr);
+      var traitsStr = getParameterByName("traits", url);
+      var traits = traitsStr === "" ? [] : traitsStr.split(",").map(function(x) { return Number(x); });
+      return {
+        version: version,
+        ethoses: ethoses,
+        government: government,
+        traits: traits
+      };
+    }
+    function modelToUrl (model) {
+      var str = "";
+      str += "?version=";
+      str += model.version;
+      str += "&ethoses=";
+      str += model.ethoses.join(",");
+      str += "&government=";
+      str += model.government;
+      str += "&traits=";
+      str += model.traits.join(",");
+
+      return str;
+    }
+    var app = window.StellarisRaceMaker = Elm.embed(
+      Elm.Main,
+      document.getElementById("app"),
+      {
+        setModelRequests: {
+          version: 0,
+          ethoses: [],
+          government: null,
+          traits: []
+        }
+      }
+    );
+    if (window.location.search) {
+      // console.log(urlToModel(window.location.search));
+      app.ports.setModelRequests.send(urlToModel(window.location.search));
+    }
+    app.ports.model.subscribe(function (model) {
+      history.pushState(model, "", modelToUrl(model));
+    });
+  </script>
 </body>
 </html>

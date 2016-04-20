@@ -31,6 +31,7 @@ traitsAreValid traits =
 
 type Action
   = NoOp
+  | Init Model
   | SelectEthos Ethos
   | DeselectEthos Ethos
   | HoverEthos Ethos
@@ -52,6 +53,8 @@ update action model =
   case action of
     NoOp ->
       model
+    Init newModel ->
+      newModel
     SelectEthos ethos ->
       let
         newEthoses =

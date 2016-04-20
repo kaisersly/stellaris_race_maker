@@ -47,6 +47,7 @@ Elm.Update.make = function (_elm) {
    var SelectEthos = function (a) {
       return {ctor: "SelectEthos",_0: a};
    };
+   var Init = function (a) {    return {ctor: "Init",_0: a};};
    var NoOp = {ctor: "NoOp"};
    var traitsAreValid = function (traits) {
       return _U.cmp($Trait.remainingPoints(traits),
@@ -70,6 +71,7 @@ Elm.Update.make = function (_elm) {
       var _p1 = action;
       switch (_p1.ctor)
       {case "NoOp": return model;
+         case "Init": return _p1._0;
          case "SelectEthos": var _p2 = _p1._0;
            var newEthoses = A2($List.append,
            _U.list([_p2]),
@@ -133,6 +135,7 @@ Elm.Update.make = function (_elm) {
    return _elm.Update.values = {_op: _op
                                ,update: update
                                ,NoOp: NoOp
+                               ,Init: Init
                                ,SelectEthos: SelectEthos
                                ,DeselectEthos: DeselectEthos
                                ,HoverEthos: HoverEthos
