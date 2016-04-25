@@ -109,7 +109,7 @@ Elm.Import.History.make = function (_elm) {
    });
    var name = function (path) {
       var submatches = A2(findInPath,path,"name=\"(.*)\"");
-      return A2($Maybe.withDefault,"aze",$List.head(submatches));
+      return A2($Maybe.withDefault,"",$List.head(submatches));
    };
    var toInt = function (str) {
       return A2($Result.withDefault,-1,$String.toInt(str));
