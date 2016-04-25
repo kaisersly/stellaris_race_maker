@@ -52,7 +52,7 @@ name path =
     submatches = findInPath path "name=\"(.*)\""
   in
     List.head submatches
-      |> Maybe.withDefault "aze"
+      |> Maybe.withDefault ""
 
 
 ethoses : String -> List Int
