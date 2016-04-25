@@ -1,0 +1,30 @@
+Elm.Race = Elm.Race || {};
+Elm.Race.Reset = Elm.Race.Reset || {};
+Elm.Race.Reset.make = function (_elm) {
+   "use strict";
+   _elm.Race = _elm.Race || {};
+   _elm.Race.Reset = _elm.Race.Reset || {};
+   if (_elm.Race.Reset.values) return _elm.Race.Reset.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Model = Elm.Model.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Update = Elm.Update.make(_elm);
+   var _op = {};
+   var show = function (address) {
+      return A2($Html.button,
+      _U.list([$Html$Attributes.$class("btn btn-default")
+              ,A2($Html$Events.onClick,
+              address,
+              $Update.Init($Model.initialModel))]),
+      _U.list([$Html.text("Reset")]));
+   };
+   return _elm.Race.Reset.values = {_op: _op,show: show};
+};

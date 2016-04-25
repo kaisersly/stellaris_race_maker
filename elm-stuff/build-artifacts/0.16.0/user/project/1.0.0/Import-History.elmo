@@ -1,8 +1,11 @@
 Elm.Import = Elm.Import || {};
-Elm.Import.make = function (_elm) {
+Elm.Import.History = Elm.Import.History || {};
+Elm.Import.History.make = function (_elm) {
    "use strict";
    _elm.Import = _elm.Import || {};
-   if (_elm.Import.values) return _elm.Import.values;
+   _elm.Import.History = _elm.Import.History || {};
+   if (_elm.Import.History.values)
+   return _elm.Import.History.values;
    var _U = Elm.Native.Utils.make(_elm),
    $Array = Elm.Array.make(_elm),
    $Basics = Elm.Basics.make(_elm),
@@ -15,8 +18,10 @@ Elm.Import.make = function (_elm) {
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Model = Elm.Model.make(_elm),
+   $Regex = Elm.Regex.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm),
    $Trait = Elm.Trait.make(_elm),
    $Trait$Data = Elm.Trait.Data.make(_elm),
    $Update = Elm.Update.make(_elm);
@@ -44,6 +49,9 @@ Elm.Import.make = function (_elm) {
       var actions = A2($List.map,$Update.SelectEthos,ethoses);
       return A3($List.foldl,$Update.update,model,actions);
    });
+   var setName = F2(function (name,model) {
+      return A2($Update.update,$Update.SetName(name),model);
+   });
    var filterNothings = function (list) {
       return A3($List.foldl,
       F2(function (current,acc) {
@@ -57,7 +65,7 @@ Elm.Import.make = function (_elm) {
       _U.list([]),
       list);
    };
-   var fromIndices = function (indicesModel) {
+   var fromIndicesModel = function (indicesModel) {
       var traitsArray = $Array.fromList($Trait$Data.all);
       var traits = filterNothings(A2($List.map,
       A2($Basics.flip,$Array.get,traitsArray),
@@ -75,13 +83,70 @@ Elm.Import.make = function (_elm) {
       var ethoses = filterNothings(A2($List.map,
       A2($Basics.flip,$Array.get,ethosesArray),
       indicesModel.ethoses));
+      var name = indicesModel.name;
       return A2(checkVersion,
       indicesModel.version,
       A2(setTraits,
       traits,
       A2(setGovernment,
       government,
-      A2(setEthoses,ethoses,$Model.initialModel))));
+      A2(setEthoses,ethoses,A2(setName,name,$Model.initialModel)))));
    };
-   return _elm.Import.values = {_op: _op,fromIndices: fromIndices};
+   var findInPath = F2(function (path,expr) {
+      var regexp = $Regex.regex(expr);
+      var matches = A3($Regex.find,$Regex.All,regexp,path);
+      return A2($List.map,
+      $Maybe.withDefault(""),
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x,$Maybe.Nothing);
+      },
+      A2($List.concatMap,
+      function (_) {
+         return _.submatches;
+      },
+      matches)));
+   });
+   var name = function (path) {
+      var submatches = A2(findInPath,path,"name=\"(.*)\"");
+      return A2($Maybe.withDefault,"aze",$List.head(submatches));
+   };
+   var toInt = function (str) {
+      return A2($Result.withDefault,-1,$String.toInt(str));
+   };
+   var version = function (path) {
+      var submatches = A2(findInPath,path,"version=([0-9]*)");
+      return A2($Maybe.withDefault,
+      -1,
+      $List.head(A2($List.map,toInt,submatches)));
+   };
+   var ethoses = function (path) {
+      var submatches = A2(findInPath,path,"ethoses=([0-9|,]*)");
+      return A2($List.map,
+      toInt,
+      A2($List.concatMap,$String.split(","),submatches));
+   };
+   var government = function (path) {
+      var submatches = A2(findInPath,path,"government=([0-9]*)");
+      return $List.head(A2($List.map,toInt,submatches));
+   };
+   var traits = function (path) {
+      var submatches = A2(findInPath,path,"traits=([0-9|,]*)");
+      return A2($List.map,
+      toInt,
+      A2($List.concatMap,$String.split(","),submatches));
+   };
+   var buildIndicesModel = function (path) {
+      return {version: version(path)
+             ,name: name(path)
+             ,ethoses: ethoses(path)
+             ,government: government(path)
+             ,traits: traits(path)};
+   };
+   var fromPath = function (path) {
+      return _U.eq(path,
+      "") ? $Model.initialModel : fromIndicesModel(buildIndicesModel(path));
+   };
+   return _elm.Import.History.values = {_op: _op
+                                       ,fromPath: fromPath};
 };

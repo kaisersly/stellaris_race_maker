@@ -2,23 +2,24 @@ module Main where
 
 
 import Html exposing (Html)
+import Task exposing (Task)
 
 
-import Model exposing (Model, initialModel)
+import Model exposing (Model, ExportModel, initialModel, modelToExportModel)
 import Update exposing (update, Action(NoOp, Init))
 import View exposing (show)
-import Export
-import Import
+import Export.History
+import Import.History
 import Version
 
 
-port setModelRequests : Signal.Signal Export.IndicesModel
+port path : Signal.Signal String
 
 
 setModelAction : Signal.Signal Action
 setModelAction =
-  Signal.map Import.fromIndices setModelRequests
-  |> Signal.map Init
+  Signal.map Import.History.fromPath path
+    |> Signal.map Init
 
 
 mb : Signal.Mailbox Action
@@ -39,11 +40,17 @@ modelSignal =
   Signal.foldp update initialModel actionSignal
 
 
+exportModelSignal : Signal.Signal ExportModel
+exportModelSignal =
+  Signal.map modelToExportModel modelSignal
+    |> Signal.dropRepeats
+
+
 main : Signal.Signal Html
 main =
   Signal.map (show mb.address) modelSignal
 
 
-port model : Signal Export.IndicesModel
-port model =
-  Signal.map Export.asIndices modelSignal
+port newPath : Signal.Signal String
+port newPath =
+  Signal.map Export.History.toPath exportModelSignal

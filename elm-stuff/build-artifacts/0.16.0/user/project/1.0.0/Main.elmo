@@ -6,9 +6,9 @@ Elm.Main.make = function (_elm) {
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
-   $Export = Elm.Export.make(_elm),
+   $Export$History = Elm.Export.History.make(_elm),
    $Html = Elm.Html.make(_elm),
-   $Import = Elm.Import.make(_elm),
+   $Import$History = Elm.Import.History.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Model = Elm.Model.make(_elm),
@@ -18,51 +18,35 @@ Elm.Main.make = function (_elm) {
    $View = Elm.View.make(_elm);
    var _op = {};
    var mb = $Signal.mailbox($Update.NoOp);
-   var setModelRequests = Elm.Native.Port.make(_elm).inboundSignal("setModelRequests",
-   "Export.IndicesModel",
+   var path = Elm.Native.Port.make(_elm).inboundSignal("path",
+   "String",
    function (v) {
-      return typeof v === "object" && "version" in v && "ethoses" in v && "government" in v && "traits" in v ? {_: {}
-                                                                                                               ,version: typeof v.version === "number" && isFinite(v.version) && Math.floor(v.version) === v.version ? v.version : _U.badPort("an integer",
-                                                                                                               v.version)
-                                                                                                               ,ethoses: typeof v.ethoses === "object" && v.ethoses instanceof Array ? Elm.Native.List.make(_elm).fromArray(v.ethoses.map(function (v) {
-                                                                                                                  return typeof v === "number" && isFinite(v) && Math.floor(v) === v ? v : _U.badPort("an integer",
-                                                                                                                  v);
-                                                                                                               })) : _U.badPort("an array",v.ethoses)
-                                                                                                               ,government: v.government === null ? Elm.Maybe.make(_elm).Nothing : Elm.Maybe.make(_elm).Just(typeof v.government === "number" && isFinite(v.government) && Math.floor(v.government) === v.government ? v.government : _U.badPort("an integer",
-                                                                                                               v.government))
-                                                                                                               ,traits: typeof v.traits === "object" && v.traits instanceof Array ? Elm.Native.List.make(_elm).fromArray(v.traits.map(function (v) {
-                                                                                                                  return typeof v === "number" && isFinite(v) && Math.floor(v) === v ? v : _U.badPort("an integer",
-                                                                                                                  v);
-                                                                                                               })) : _U.badPort("an array",
-                                                                                                               v.traits)} : _U.badPort("an object with fields `version`, `ethoses`, `government`, `traits`",
+      return typeof v === "string" || typeof v === "object" && v instanceof String ? v : _U.badPort("a string",
       v);
    });
    var setModelAction = A2($Signal.map,
    $Update.Init,
-   A2($Signal.map,$Import.fromIndices,setModelRequests));
+   A2($Signal.map,$Import$History.fromPath,path));
    var actionSignal = $Signal.mergeMany(_U.list([mb.signal
                                                 ,setModelAction]));
    var modelSignal = A3($Signal.foldp,
    $Update.update,
    $Model.initialModel,
    actionSignal);
-   var main = A2($Signal.map,$View.show(mb.address),modelSignal);
-   var model = Elm.Native.Port.make(_elm).outboundSignal("model",
+   var exportModelSignal = $Signal.dropRepeats(A2($Signal.map,
+   $Model.modelToExportModel,
+   modelSignal));
+   var newPath = Elm.Native.Port.make(_elm).outboundSignal("newPath",
    function (v) {
-      return {version: v.version
-             ,ethoses: Elm.Native.List.make(_elm).toArray(v.ethoses).map(function (v) {
-                return v;
-             })
-             ,government: v.government.ctor === "Nothing" ? null : v.government._0
-             ,traits: Elm.Native.List.make(_elm).toArray(v.traits).map(function (v) {
-                return v;
-             })};
+      return v;
    },
-   A2($Signal.map,$Export.asIndices,modelSignal));
+   A2($Signal.map,$Export$History.toPath,exportModelSignal));
+   var main = A2($Signal.map,$View.show(mb.address),modelSignal);
    return _elm.Main.values = {_op: _op
                              ,setModelAction: setModelAction
                              ,mb: mb
                              ,actionSignal: actionSignal
                              ,modelSignal: modelSignal
+                             ,exportModelSignal: exportModelSignal
                              ,main: main};
 };

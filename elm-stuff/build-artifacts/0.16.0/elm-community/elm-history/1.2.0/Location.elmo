@@ -1,0 +1,51 @@
+Elm.Location = Elm.Location || {};
+Elm.Location.make = function (_elm) {
+   "use strict";
+   _elm.Location = _elm.Location || {};
+   if (_elm.Location.values) return _elm.Location.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Native$Location = Elm.Native.Location.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Task = Elm.Task.make(_elm);
+   var _op = {};
+   var replace = $Native$Location.replace;
+   var assign = $Native$Location.assign;
+   var AllowCache = {ctor: "AllowCache"};
+   var ForceServer = {ctor: "ForceServer"};
+   var nativeReload = $Native$Location.reload;
+   var reload = function (source) {
+      return nativeReload(function () {
+         var _p0 = source;
+         if (_p0.ctor === "ForceServer") {
+               return true;
+            } else {
+               return false;
+            }
+      }());
+   };
+   var location = $Native$Location.location;
+   var Location = F9(function (a,b,c,d,e,f,g,h,i) {
+      return {href: a
+             ,protocol: b
+             ,host: c
+             ,hostname: d
+             ,port$: e
+             ,pathname: f
+             ,search: g
+             ,hash: h
+             ,origin: i};
+   });
+   return _elm.Location.values = {_op: _op
+                                 ,location: location
+                                 ,reload: reload
+                                 ,assign: assign
+                                 ,replace: replace
+                                 ,Location: Location
+                                 ,ForceServer: ForceServer
+                                 ,AllowCache: AllowCache};
+};

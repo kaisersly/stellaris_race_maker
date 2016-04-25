@@ -15,6 +15,8 @@ import Government.AllList
 import Government.SelectedList
 import Trait.AllList
 import Trait.SelectedList
+import Race.Name
+import Race.Reset
 
 
 show : Signal.Address Action -> Model -> Html
@@ -33,6 +35,21 @@ show address model =
     div
       [ class "container-fluid" ]
       [ warning
+      , div
+          [ class "row" ]
+          [ div
+              [ class "col-sm-12" ]
+              [ Race.Reset.show address ]
+          ]
+      , div
+          [ class "row" ]
+          [ div
+              [ class "col-sm-5" ]
+              [ Race.Name.show address model.name ]
+          , div
+              [ class "col-sm-7" ]
+              [ ]
+          ]
       , div
           [ class "row" ]
           [ div

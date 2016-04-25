@@ -1,0 +1,45 @@
+Elm.Race = Elm.Race || {};
+Elm.Race.Name = Elm.Race.Name || {};
+Elm.Race.Name.make = function (_elm) {
+   "use strict";
+   _elm.Race = _elm.Race || {};
+   _elm.Race.Name = _elm.Race.Name || {};
+   if (_elm.Race.Name.values) return _elm.Race.Name.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Update = Elm.Update.make(_elm);
+   var _op = {};
+   var onInput = F2(function (address,contentToValue) {
+      return A3($Html$Events.on,
+      "input",
+      $Html$Events.targetValue,
+      function (str) {
+         return A2($Signal.message,address,contentToValue(str));
+      });
+   });
+   var show = F2(function (address,name) {
+      return A2($Html.div,
+      _U.list([$Html$Attributes.$class("form-group")]),
+      _U.list([A2($Html.label,
+              _U.list([]),
+              _U.list([$Html.text("Name")]))
+              ,A2($Html.input,
+              _U.list([$Html$Attributes.$class("form-control")
+                      ,A2(onInput,
+                      address,
+                      function (x) {
+                         return $Update.SetName(x);
+                      })
+                      ,$Html$Attributes.value(name)]),
+              _U.list([]))]));
+   });
+   return _elm.Race.Name.values = {_op: _op,show: show};
+};

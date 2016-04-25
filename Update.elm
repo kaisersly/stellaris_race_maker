@@ -32,6 +32,7 @@ traitsAreValid traits =
 type Action
   = NoOp
   | Init Model
+  | SetName String
   | SelectEthos Ethos
   | DeselectEthos Ethos
   | HoverEthos Ethos
@@ -55,6 +56,8 @@ update action model =
       model
     Init newModel ->
       newModel
+    SetName name ->
+      { model | name = name }
     SelectEthos ethos ->
       let
         newEthoses =

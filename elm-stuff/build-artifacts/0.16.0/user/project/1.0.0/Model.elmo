@@ -16,6 +16,7 @@ Elm.Model.make = function (_elm) {
    $Version = Elm.Version.make(_elm);
    var _op = {};
    var initialModel = {version: $Version.get
+                      ,name: ""
                       ,warning: $Maybe.Nothing
                       ,selectedEthoses: _U.list([])
                       ,hoveredEthos: $Maybe.Nothing
@@ -24,18 +25,53 @@ Elm.Model.make = function (_elm) {
                       ,hoveredGovernmentForm: $Maybe.Nothing
                       ,selectedTraits: _U.list([])
                       ,hoveredTrait: $Maybe.Nothing};
-   var Model = F9(function (a,b,c,d,e,f,g,h,i) {
+   var modelToExportModel = function (model) {
+      return {version: model.version
+             ,name: model.name
+             ,selectedEthoses: model.selectedEthoses
+             ,selectedGovernment: model.selectedGovernment
+             ,selectedTraits: model.selectedTraits};
+   };
+   var ExportModel = F5(function (a,b,c,d,e) {
       return {version: a
-             ,warning: b
+             ,name: b
              ,selectedEthoses: c
-             ,hoveredEthos: d
-             ,selectedGovernment: e
-             ,hoveredGovernment: f
-             ,hoveredGovernmentForm: g
-             ,selectedTraits: h
-             ,hoveredTrait: i};
+             ,selectedGovernment: d
+             ,selectedTraits: e};
    });
+   var Model = function (a) {
+      return function (b) {
+         return function (c) {
+            return function (d) {
+               return function (e) {
+                  return function (f) {
+                     return function (g) {
+                        return function (h) {
+                           return function (i) {
+                              return function (j) {
+                                 return {version: a
+                                        ,name: b
+                                        ,warning: c
+                                        ,selectedEthoses: d
+                                        ,hoveredEthos: e
+                                        ,selectedGovernment: f
+                                        ,hoveredGovernment: g
+                                        ,hoveredGovernmentForm: h
+                                        ,selectedTraits: i
+                                        ,hoveredTrait: j};
+                              };
+                           };
+                        };
+                     };
+                  };
+               };
+            };
+         };
+      };
+   };
    return _elm.Model.values = {_op: _op
                               ,initialModel: initialModel
+                              ,modelToExportModel: modelToExportModel
+                              ,ExportModel: ExportModel
                               ,Model: Model};
 };

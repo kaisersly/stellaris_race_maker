@@ -1,0 +1,129 @@
+Elm.Export = Elm.Export || {};
+Elm.Export.History = Elm.Export.History || {};
+Elm.Export.History.make = function (_elm) {
+   "use strict";
+   _elm.Export = _elm.Export || {};
+   _elm.Export.History = _elm.Export.History || {};
+   if (_elm.Export.History.values)
+   return _elm.Export.History.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Ethos$Data = Elm.Ethos.Data.make(_elm),
+   $Government$Data = Elm.Government.Data.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Model = Elm.Model.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm),
+   $Trait$Data = Elm.Trait.Data.make(_elm);
+   var _op = {};
+   var traits = function (_p0) {
+      var _p1 = _p0;
+      var traitsStr = A2($String.join,
+      ",",
+      A2($List.map,$Basics.toString,_p1.traits));
+      return A2($Basics._op["++"],"traits=",traitsStr);
+   };
+   var government = function (_p2) {
+      var _p3 = _p2;
+      var governmentStr = function () {
+         var _p4 = _p3.government;
+         if (_p4.ctor === "Nothing") {
+               return "";
+            } else {
+               return $Basics.toString(_p4._0);
+            }
+      }();
+      return A2($Basics._op["++"],"government=",governmentStr);
+   };
+   var ethoses = function (_p5) {
+      var _p6 = _p5;
+      var ethosesStr = A2($String.join,
+      ",",
+      A2($List.map,$Basics.toString,_p6.ethoses));
+      return A2($Basics._op["++"],"ethoses=",ethosesStr);
+   };
+   var name = function (_p7) {
+      var _p8 = _p7;
+      return A2($Basics._op["++"],"name=",$Basics.toString(_p8.name));
+   };
+   var version = function (_p9) {
+      var _p10 = _p9;
+      return A2($Basics._op["++"],
+      "version=",
+      $Basics.toString(_p10.version));
+   };
+   var indexInList = F2(function (list,a) {
+      return $List.head(A2($List.map,
+      function (_p11) {
+         var _p12 = _p11;
+         return _p12._0;
+      },
+      A2($List.filter,
+      function (_p13) {
+         var _p14 = _p13;
+         return _U.eq(_p14._1,a);
+      },
+      A2($List.indexedMap,
+      F2(function (v0,v1) {
+         return {ctor: "_Tuple2",_0: v0,_1: v1};
+      }),
+      list))));
+   });
+   var buildIndicesModel = function (model) {
+      var traits = $List.sort(A2($List.map,
+      $Maybe.withDefault(0),
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x,$Maybe.Nothing);
+      },
+      A2($List.map,
+      indexInList($Trait$Data.all),
+      model.selectedTraits))));
+      var government = function () {
+         var _p15 = model.selectedGovernment;
+         if (_p15.ctor === "Nothing") {
+               return $Maybe.Nothing;
+            } else {
+               return A2(indexInList,$Government$Data.all,_p15._0);
+            }
+      }();
+      var ethoses = $List.sort(A2($List.map,
+      $Maybe.withDefault(0),
+      A2($List.filter,
+      function (x) {
+         return !_U.eq(x,$Maybe.Nothing);
+      },
+      A2($List.map,
+      indexInList($Ethos$Data.all),
+      model.selectedEthoses))));
+      return {version: model.version
+             ,name: model.name
+             ,ethoses: ethoses
+             ,government: government
+             ,traits: traits};
+   };
+   var toPath = function (model) {
+      var indicesModel = buildIndicesModel(model);
+      var queryString = A2($String.join,
+      "&",
+      _U.list([version(indicesModel)
+              ,name(indicesModel)
+              ,ethoses(indicesModel)
+              ,government(indicesModel)
+              ,traits(indicesModel)]));
+      return A2($Basics._op["++"],"?",queryString);
+   };
+   var IndicesModel = F5(function (a,b,c,d,e) {
+      return {version: a
+             ,name: b
+             ,ethoses: c
+             ,government: d
+             ,traits: e};
+   });
+   return _elm.Export.History.values = {_op: _op
+                                       ,toPath: toPath
+                                       ,IndicesModel: IndicesModel};
+};
